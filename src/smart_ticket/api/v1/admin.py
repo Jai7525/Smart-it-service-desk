@@ -1,0 +1,108 @@
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlmodel import Session, select
+from typing import List, Optional
+import uuid
+from pydantic import BaseModel
+from smart_ticket.core.database import get_session
+from smart_ticket.core.security import require_roles, get_current_user
+from smart_ticket.models import Profile, SupportTeam, SLAPolicy, UserRole, IncidentCategory, PriorityLevel
+from smart_ticket.schemas import ProfileRead
+
+router = APIRouter(prefix="/admin", tags=["System Administration"])
+
+
+class UserCreateSchema(BaseModel):
+    full_name: str
+    email: str
+    role: UserRole
+    department_name: Optional[str] = "Engineering"
+
+
+class TeamCreateSchema(BaseModel):
+    name: str
+    category: IncidentCategory
+    description: Optional[str] = None
+
+
+class SlaUpdateSchema(BaseModel):
+    priority: PriorityLevel
+    response_time_hours: float
+    resolution_time_hours: float
+
+
+@router.get("/users", response_model=List[ProfileRead])
+def list_all_users(session: Session = Depends(get_session)):
+    return session.exec(select(Profile).order_by(Profile.created_at.desc())).all()
+
+
+@router.post("/users", response_model=ProfileRead, status_code=status.HTTP_201_CREATED)
+def create_user_account(user_in: UserCreateSchema, session: Session = Depends(get_session)):
+    existing = session.exec(select(Profile).where(Profile.email == user_in.email)).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="User with this email already exists")
+
+    new_user = Profile(
+        email=user_in.email,
+        full_name=user_in.full_name,
+        role=user_in.role,
+        is_active=True,
+        is_available=True
+    )
+    session.add(new_user)
+    session.commit()
+    session.refresh(new_user)
+    return new_user
+
+
+@router.patch("/users/{user_id}/toggle-active", response_model=ProfileRead)
+def toggle_user_active(user_id: uuid.UUID, session: Session = Depends(get_session)):
+    user = session.get(Profile, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    user.is_active = not user.is_active
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+    return user
+
+
+@router.get("/teams")
+def list_teams(session: Session = Depends(get_session)):
+    return session.exec(select(SupportTeam)).all()
+
+
+@router.post("/teams", status_code=status.HTTP_201_CREATED)
+def create_team(team_in: TeamCreateSchema, session: Session = Depends(get_session)):
+    team = SupportTeam(
+        name=team_in.name,
+        category=team_in.category,
+        description=team_in.description
+    )
+    session.add(team)
+    session.commit()
+    session.refresh(team)
+    return team
+
+
+@router.get("/sla-policies")
+def list_sla_policies(session: Session = Depends(get_session)):
+    return session.exec(select(SLAPolicy)).all()
+
+
+@router.put("/sla-policies")
+def update_sla_policy(policy_in: SlaUpdateSchema, session: Session = Depends(get_session)):
+    policy = session.exec(select(SLAPolicy).where(SLAPolicy.priority == policy_in.priority)).first()
+    if not policy:
+        policy = SLAPolicy(
+            priority=policy_in.priority,
+            response_time_hours=policy_in.response_time_hours,
+            resolution_time_hours=policy_in.resolution_time_hours
+        )
+    else:
+        policy.response_time_hours = policy_in.response_time_hours
+        policy.resolution_time_hours = policy_in.resolution_time_hours
+    session.add(policy)
+    session.commit()
+    session.refresh(policy)
+    return policy
+

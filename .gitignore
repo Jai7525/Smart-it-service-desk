@@ -1,0 +1,83 @@
+# ==============================================================================
+# Environment & Secrets (CRITICAL: Never commit to Git)
+# ==============================================================================
+.env
+.env.local
+.env.*.local
+*.env
+
+# ==============================================================================
+# Database & Local Stores
+# ==============================================================================
+*.db
+*.sqlite
+*.sqlite3
+smart_ticket.db
+
+# ==============================================================================
+# Python & Virtual Environments
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.venv/
+venv/
+ENV/
+env/
+
+# Pytest / Testing artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# ==============================================================================
+# Node & Frontend (React / Vite)
+# ==============================================================================
+frontend/node_modules/
+node_modules/
+frontend/dist/
+dist/
+.npm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==============================================================================
+# IDE & System Files
+# ==============================================================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Scratch / One-off debugging scripts (Optional clean repo)
+audit_endpoints.py
+debug_incidents.py
+test_insert.py
+verify_all.py
