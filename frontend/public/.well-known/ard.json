@@ -1,0 +1,14 @@
+{
+  "$schema": "https://agenticresourcediscovery.org/schema/v1/manifest.json",
+  "name": "SmartTicket ITSM",
+  "description": "Enterprise IT incident triage, automated workflow dispatch, and SLA monitoring platform.",
+  "version": "1.0.0",
+  "homepage": "https://smart-itsm-workflow-platform.vercel.app/",
+  "resources": [
+    {
+      "type": "api",
+      "name": "SmartTicket API",
+      "url": "https://smart-it-service-desk-1qwo.onrender.com/api"
+    }
+  ]
+}

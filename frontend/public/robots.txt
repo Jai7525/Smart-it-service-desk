@@ -1,0 +1,20 @@
+# Allow all user agents
+User-agent: *
+Allow: /
+
+# Disallow authenticated application routes
+Disallow: /assigned-tickets
+Disallow: /tickets
+Disallow: /service-catalog
+Disallow: /my-requests
+Disallow: /approvals
+Disallow: /changes
+Disallow: /change-calendar
+Disallow: /ai-assistant
+Disallow: /users
+Disallow: /teams
+Disallow: /departments
+Disallow: /sla-policies
+
+# Sitemap
+Sitemap: https://smart-itsm-workflow-platform.vercel.app/sitemap.xml

@@ -1,0 +1,14 @@
+# SmartTicket - Enterprise IT Service Management & Automation
+
+> SmartTicket is an automated IT Service Management (ITSM) and Incident Resolution platform with automated classification, SLA monitoring, and role-based workflows.
+
+## Core Capabilities
+- Automated incident triage and keyword-based category classification (Network, Hardware, Software, Access, General).
+- Deterministic 3x3 Impact and Urgency priority matrix scoring.
+- Workload-balanced auto-dispatch to specialized support teams.
+- Real-time SLA watchdog tracking with multi-tier escalation.
+- Self-service catalog, approvals, change management, and knowledge base.
+
+## Documentation & Portals
+- [Public Portal](https://smart-itsm-workflow-platform.vercel.app/)
+- [Knowledge Base](https://smart-itsm-workflow-platform.vercel.app/knowledge)

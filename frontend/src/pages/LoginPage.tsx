@@ -66,14 +66,14 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#3072E8] flex items-center justify-center p-3 sm:p-6 lg:p-10 font-sans">
+    <main className="min-h-screen w-full bg-[#3072E8] flex items-center justify-center p-3 sm:p-6 lg:p-10 font-sans">
       {/* Outer Grand Card Filling Screen Elegantly */}
       <div className="w-full max-w-[1140px] min-h-[640px] bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 border-4 border-white/20">
         
         {/* ========================================================================= */}
         {/* LEFT COLUMN: CRISP WHITE ILLUSTRATION SECTION                             */}
         {/* ========================================================================= */}
-        <div className="lg:col-span-6 bg-white p-8 sm:p-12 lg:p-14 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-slate-100 relative">
+        <section aria-label="Welcome and illustration" className="lg:col-span-6 bg-white p-8 sm:p-12 lg:p-14 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-slate-100 relative">
           
           {/* Brand & Headline */}
           <div className="space-y-3">
@@ -88,7 +88,7 @@ export const LoginPage: React.FC = () => {
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight leading-tight">
                 Your Digital Service Station
               </h1>
-              <p className="text-sm text-slate-500 mt-1 font-medium">
+              <p className="text-sm text-slate-600 mt-1 font-medium">
                 Welcome to your unified IT support and service desk portal.
               </p>
             </div>
@@ -99,29 +99,33 @@ export const LoginPage: React.FC = () => {
             <div className="w-full max-w-[440px] flex items-center justify-center transform hover:scale-[1.01] transition-transform duration-300">
               <img
                 src={loginIllustration}
-                alt="IT Support Service Desk"
+                alt="IT Support Service Desk Agent resolving ticket"
+                width={600}
+                height={500}
+                fetchPriority="high"
+                decoding="async"
                 className="w-full h-auto object-contain drop-shadow-sm select-none"
               />
             </div>
           </div>
 
           {/* Simple Clean Tagline */}
-          <div className="text-xs text-slate-400 font-medium">
+          <div className="text-xs text-slate-600 font-medium">
             Fast resolution • Automated routing • 24/7 SLA tracking
           </div>
-        </div>
+        </section>
 
         {/* ========================================================================= */}
         {/* RIGHT COLUMN: PERFECT IN-BETWEEN BLUE SIGN-IN AREA (#3072E8)              */}
         {/* ========================================================================= */}
-        <div className="lg:col-span-6 bg-[#3072E8] p-8 sm:p-12 lg:p-16 flex flex-col justify-between text-white relative">
+        <section aria-label="Sign in" className="lg:col-span-6 bg-[#3072E8] p-8 sm:p-12 lg:p-16 flex flex-col justify-between text-white relative">
           
           <div className="max-w-md w-full mx-auto my-auto space-y-7">
             <div>
               <h2 className="text-3xl font-extrabold text-white tracking-tight">
                 Welcome back
               </h2>
-              <p className="text-sm text-blue-100 mt-1.5 font-normal">
+              <p className="text-sm text-white/90 mt-1.5 font-medium">
                 Sign in to the SmartTicket application
               </p>
             </div>
@@ -151,16 +155,16 @@ export const LoginPage: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-blue-100 pt-1">
+              <div className="flex items-center justify-between text-xs text-white pt-1">
                 <label className="flex items-center gap-2 cursor-pointer select-none">
                   <input
                     type="checkbox"
                     defaultChecked
-                    className="w-4 h-4 rounded border-blue-300 bg-blue-700/40 text-white focus:ring-0 cursor-pointer"
+                    className="w-4 h-4 rounded border-white/40 bg-blue-700/40 text-white focus:ring-0 cursor-pointer"
                   />
-                  <span>Remember me</span>
+                  <span className="text-white font-medium">Remember me</span>
                 </label>
-                <span className="text-blue-100 hover:text-white cursor-pointer font-medium underline-offset-2 hover:underline">
+                <span className="text-white hover:text-white/80 cursor-pointer font-semibold underline-offset-2 hover:underline">
                   Need help?
                 </span>
               </div>
@@ -169,25 +173,25 @@ export const LoginPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3.5 mt-2 bg-white hover:bg-slate-50 disabled:opacity-60 text-[#3072E8] rounded-xl text-sm font-bold shadow-lg shadow-blue-900/15 flex items-center justify-center gap-2 transition-all cursor-pointer transform active:scale-[0.99]"
+                className="w-full py-3.5 mt-2 bg-white hover:bg-slate-50 disabled:opacity-60 text-[#1E40AF] rounded-xl text-sm font-bold shadow-lg shadow-blue-900/15 flex items-center justify-center gap-2 transition-all cursor-pointer transform active:scale-[0.99]"
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin text-[#3072E8]" />
+                    <Loader2 className="w-4 h-4 animate-spin text-[#1E40AF]" />
                     <span>Signing in...</span>
                   </>
                 ) : (
                   <>
-                    <span>Login Now</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <span className="font-bold text-[#1E40AF]">Login Now</span>
+                    <ArrowRight className="w-4 h-4 text-[#1E40AF]" />
                   </>
                 )}
               </button>
             </form>
 
             {/* Quick Demonstration Persona Switcher */}
-            <div className="pt-6 border-t border-blue-400/30 space-y-2.5">
-              <span className="text-xs font-semibold text-blue-100 uppercase tracking-wider block text-center">
+            <div className="pt-6 border-t border-white/20 space-y-2.5">
+              <span className="text-xs font-bold text-white uppercase tracking-wider block text-center">
                 Demo Quick Access:
               </span>
               <div className="grid grid-cols-4 gap-2">
@@ -196,10 +200,10 @@ export const LoginPage: React.FC = () => {
                     key={acc.label}
                     type="button"
                     onClick={() => handleQuickFill(acc.email)}
-                    className={`py-2 px-2.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer text-center ${
+                    className={`py-2 px-2.5 rounded-lg text-xs font-bold border transition-all cursor-pointer text-center ${
                       email === acc.email
-                        ? 'bg-white text-[#3072E8] border-white shadow-sm'
-                        : 'bg-blue-700/35 hover:bg-blue-700/60 text-white border-blue-300/30'
+                        ? 'bg-white text-[#1E40AF] border-white shadow-sm'
+                        : 'bg-blue-700/40 hover:bg-blue-700/70 text-white border-white/30'
                     }`}
                   >
                     {acc.label}
@@ -210,11 +214,11 @@ export const LoginPage: React.FC = () => {
           </div>
 
           {/* Clean Terms Link */}
-          <div className="pt-6 border-t border-blue-400/30 text-center text-[11px] text-blue-100 leading-relaxed max-w-sm mx-auto">
+          <div className="pt-6 border-t border-white/20 text-center text-[11px] text-white/90 font-medium leading-relaxed max-w-sm mx-auto">
             By signing in, you agree to the SmartTicket Terms of Service and Privacy Policy.
           </div>
-        </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
