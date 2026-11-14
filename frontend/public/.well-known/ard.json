@@ -4,22 +4,40 @@
   "description": "Enterprise IT incident triage, automated workflow dispatch, and SLA monitoring platform.",
   "entries": [
     {
-      "name": "SmartTicket Application",
+      "identifier": "smartticket-web-portal",
+      "displayName": "SmartTicket Application Portal",
       "description": "Unified IT Service Management user interface and login portal.",
       "url": "https://smart-itsm-workflow-platform.vercel.app/",
-      "type": "web"
+      "mediaType": "text/html",
+      "representativeQueries": [
+        "smartticket login",
+        "it service desk portal",
+        "submit incident ticket"
+      ]
     },
     {
-      "name": "SmartTicket REST API",
+      "identifier": "smartticket-rest-api",
+      "displayName": "SmartTicket REST API",
       "description": "FastAPI backend services for incidents, triage, and SLA enforcement.",
       "url": "https://smart-it-service-desk-1qwo.onrender.com/api",
-      "type": "api"
+      "mediaType": "application/json",
+      "representativeQueries": [
+        "smartticket api",
+        "incident triage endpoints",
+        "sla metrics api"
+      ]
     },
     {
-      "name": "IT Knowledge Base",
+      "identifier": "smartticket-knowledge-base",
+      "displayName": "IT Knowledge Base & Solutions",
       "description": "Verified technical self-service articles and troubleshooting documentation.",
       "url": "https://smart-itsm-workflow-platform.vercel.app/knowledge",
-      "type": "documentation"
+      "mediaType": "text/html",
+      "representativeQueries": [
+        "it knowledge base",
+        "vpn troubleshooting guide",
+        "self service it articles"
+      ]
     }
   ]
 }
