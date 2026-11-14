@@ -35,10 +35,13 @@ def list_all_users(session: Session = Depends(get_session)):
     users = session.exec(select(Profile).order_by(Profile.created_at.desc())).all()
     # Enrich with department_name if available
     dept_map = {d.id: d.name for d in session.exec(select(Department)).all()}
+    results = []
     for u in users:
+        p = ProfileRead.model_validate(u)
         if u.department_id and u.department_id in dept_map:
-            setattr(u, "department_name", dept_map[u.department_id])
-    return users
+            p.department_name = dept_map[u.department_id]
+        results.append(p)
+    return results
 
 
 @router.post("/users", response_model=ProfileRead, status_code=status.HTTP_201_CREATED)
@@ -71,9 +74,10 @@ def create_user_account(user_in: UserCreateSchema, session: Session = Depends(ge
     session.add(new_user)
     session.commit()
     session.refresh(new_user)
+    p = ProfileRead.model_validate(new_user)
     if dept_id and user_in.department_name:
-        setattr(new_user, "department_name", user_in.department_name.strip())
-    return new_user
+        p.department_name = user_in.department_name.strip()
+    return p
 
 
 @router.patch("/users/{user_id}/toggle-active", response_model=ProfileRead)
