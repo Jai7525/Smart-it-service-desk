@@ -83,14 +83,20 @@ const ProtectedLayout: React.FC = () => {
 };
 
 export default function App() {
+  const { user } = useAuth();
+
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/*" element={<ProtectedLayout />} />
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/login"
+          element={user ? <Navigate to="/" replace /> : <LoginPage />}
+        />
+        <Route
+          path="/*"
+          element={!user ? <Navigate to="/login" replace /> : <ProtectedLayout />}
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
