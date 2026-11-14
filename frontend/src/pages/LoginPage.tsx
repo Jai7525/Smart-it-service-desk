@@ -66,7 +66,7 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#3B82F6] flex items-center justify-center p-3 sm:p-6 lg:p-10 font-sans">
+    <div className="min-h-screen w-full bg-[#3072E8] flex items-center justify-center p-3 sm:p-6 lg:p-10 font-sans">
       {/* Outer Grand Card Filling Screen Elegantly */}
       <div className="w-full max-w-[1140px] min-h-[640px] bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 border-4 border-white/20">
         
@@ -78,7 +78,7 @@ export const LoginPage: React.FC = () => {
           {/* Brand & Headline */}
           <div className="space-y-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#3B82F6] flex items-center justify-center font-bold text-white text-xs shadow-sm">
+              <div className="w-8 h-8 rounded-lg bg-[#3072E8] flex items-center justify-center font-bold text-white text-xs shadow-sm">
                 ST
               </div>
               <span className="font-bold text-lg tracking-tight text-slate-900">SmartTicket</span>
@@ -112,9 +112,9 @@ export const LoginPage: React.FC = () => {
         </div>
 
         {/* ========================================================================= */}
-        {/* RIGHT COLUMN: BALANCED MEDIUM BLUE SIGN-IN AREA                           */}
+        {/* RIGHT COLUMN: PERFECT IN-BETWEEN BLUE SIGN-IN AREA (#3072E8)              */}
         {/* ========================================================================= */}
-        <div className="lg:col-span-6 bg-[#3B82F6] p-8 sm:p-12 lg:p-16 flex flex-col justify-between text-white relative">
+        <div className="lg:col-span-6 bg-[#3072E8] p-8 sm:p-12 lg:p-16 flex flex-col justify-between text-white relative">
           
           <div className="max-w-md w-full mx-auto my-auto space-y-7">
             <div>
@@ -146,7 +146,7 @@ export const LoginPage: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Work Email"
-                    className="w-full bg-blue-600/50 border border-blue-300/40 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-blue-100 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-white focus:bg-blue-600/70 transition-all font-medium"
+                    className="w-full bg-blue-700/35 border border-blue-300/35 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-blue-100 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-white focus:bg-blue-700/50 transition-all font-medium"
                   />
                 </div>
               </div>
@@ -156,7 +156,7 @@ export const LoginPage: React.FC = () => {
                   <input
                     type="checkbox"
                     defaultChecked
-                    className="w-4 h-4 rounded border-blue-300 bg-blue-600/50 text-white focus:ring-0 cursor-pointer"
+                    className="w-4 h-4 rounded border-blue-300 bg-blue-700/40 text-white focus:ring-0 cursor-pointer"
                   />
                   <span>Remember me</span>
                 </label>
@@ -169,11 +169,11 @@ export const LoginPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3.5 mt-2 bg-white hover:bg-slate-50 disabled:opacity-60 text-[#2563EB] rounded-xl text-sm font-bold shadow-lg shadow-blue-900/15 flex items-center justify-center gap-2 transition-all cursor-pointer transform active:scale-[0.99]"
+                className="w-full py-3.5 mt-2 bg-white hover:bg-slate-50 disabled:opacity-60 text-[#3072E8] rounded-xl text-sm font-bold shadow-lg shadow-blue-900/15 flex items-center justify-center gap-2 transition-all cursor-pointer transform active:scale-[0.99]"
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin text-[#2563EB]" />
+                    <Loader2 className="w-4 h-4 animate-spin text-[#3072E8]" />
                     <span>Signing in...</span>
                   </>
                 ) : (
@@ -198,8 +198,8 @@ export const LoginPage: React.FC = () => {
                     onClick={() => handleQuickFill(acc.email)}
                     className={`py-2 px-2.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer text-center ${
                       email === acc.email
-                        ? 'bg-white text-[#2563EB] border-white shadow-sm'
-                        : 'bg-blue-600/40 hover:bg-blue-600/70 text-white border-blue-300/30'
+                        ? 'bg-white text-[#3072E8] border-white shadow-sm'
+                        : 'bg-blue-700/35 hover:bg-blue-700/60 text-white border-blue-300/30'
                     }`}
                   >
                     {acc.label}
