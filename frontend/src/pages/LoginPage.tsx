@@ -66,9 +66,9 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-slate-100 flex items-center justify-center p-3 sm:p-6 lg:p-10 font-sans">
+    <div className="min-h-screen w-full bg-[#3B82F6] flex items-center justify-center p-3 sm:p-6 lg:p-10 font-sans">
       {/* Outer Grand Card Filling Screen Elegantly */}
-      <div className="w-full max-w-[1140px] min-h-[640px] bg-white rounded-3xl shadow-xl shadow-slate-200/60 overflow-hidden grid grid-cols-1 lg:grid-cols-12 border border-slate-200/80">
+      <div className="w-full max-w-[1140px] min-h-[640px] bg-white rounded-3xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 border-4 border-white/20">
         
         {/* ========================================================================= */}
         {/* LEFT COLUMN: CRISP WHITE ILLUSTRATION SECTION                             */}
@@ -78,7 +78,7 @@ export const LoginPage: React.FC = () => {
           {/* Brand & Headline */}
           <div className="space-y-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white text-xs shadow-sm">
+              <div className="w-8 h-8 rounded-lg bg-[#3B82F6] flex items-center justify-center font-bold text-white text-xs shadow-sm">
                 ST
               </div>
               <span className="font-bold text-lg tracking-tight text-slate-900">SmartTicket</span>
@@ -112,24 +112,24 @@ export const LoginPage: React.FC = () => {
         </div>
 
         {/* ========================================================================= */}
-        {/* RIGHT COLUMN: REFINED MINIMAL SOFT-BLUE SIGN-IN PANEL                     */}
+        {/* RIGHT COLUMN: BALANCED MEDIUM BLUE SIGN-IN AREA                           */}
         {/* ========================================================================= */}
-        <div className="lg:col-span-6 bg-slate-50/70 p-8 sm:p-12 lg:p-16 flex flex-col justify-between relative">
+        <div className="lg:col-span-6 bg-[#3B82F6] p-8 sm:p-12 lg:p-16 flex flex-col justify-between text-white relative">
           
           <div className="max-w-md w-full mx-auto my-auto space-y-7">
             <div>
-              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
+              <h2 className="text-3xl font-extrabold text-white tracking-tight">
                 Welcome back
               </h2>
-              <p className="text-sm text-slate-500 mt-1.5 font-normal">
+              <p className="text-sm text-blue-100 mt-1.5 font-normal">
                 Sign in to the SmartTicket application
               </p>
             </div>
 
             {/* Error Message */}
             {errorMessage && (
-              <div className="bg-red-50 border border-red-200 rounded-xl p-3.5 text-xs text-red-700 flex items-start gap-2.5 animate-fadeIn">
-                <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
+              <div className="bg-rose-500/20 border border-rose-300/40 rounded-xl p-3.5 text-xs text-rose-100 flex items-start gap-2.5 backdrop-blur-sm animate-fadeIn">
+                <AlertCircle className="w-4 h-4 text-rose-200 shrink-0 mt-0.5" />
                 <span className="leading-relaxed">{errorMessage}</span>
               </div>
             )}
@@ -138,7 +138,7 @@ export const LoginPage: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-1.5">
                 <div className="relative">
-                  <Mail className="w-4 h-4 text-slate-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                  <Mail className="w-4 h-4 text-blue-200 absolute left-4 top-1/2 -translate-y-1/2" />
                   <input
                     type="email"
                     required
@@ -146,34 +146,34 @@ export const LoginPage: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Work Email"
-                    className="w-full bg-white border border-slate-200 rounded-xl pl-11 pr-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-medium shadow-sm"
+                    className="w-full bg-blue-600/50 border border-blue-300/40 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-blue-100 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-white focus:bg-blue-600/70 transition-all font-medium"
                   />
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-slate-600 pt-1">
+              <div className="flex items-center justify-between text-xs text-blue-100 pt-1">
                 <label className="flex items-center gap-2 cursor-pointer select-none">
                   <input
                     type="checkbox"
                     defaultChecked
-                    className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                    className="w-4 h-4 rounded border-blue-300 bg-blue-600/50 text-white focus:ring-0 cursor-pointer"
                   />
                   <span>Remember me</span>
                 </label>
-                <span className="text-blue-600 hover:text-blue-700 cursor-pointer font-medium underline-offset-2 hover:underline">
+                <span className="text-blue-100 hover:text-white cursor-pointer font-medium underline-offset-2 hover:underline">
                   Need help?
                 </span>
               </div>
 
-              {/* Minimal Clean Action Button */}
+              {/* High-Contrast White Action Button */}
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3.5 mt-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:opacity-60 text-white rounded-xl text-sm font-semibold shadow-md shadow-blue-500/15 flex items-center justify-center gap-2 transition-all cursor-pointer transform active:scale-[0.99]"
+                className="w-full py-3.5 mt-2 bg-white hover:bg-slate-50 disabled:opacity-60 text-[#2563EB] rounded-xl text-sm font-bold shadow-lg shadow-blue-900/15 flex items-center justify-center gap-2 transition-all cursor-pointer transform active:scale-[0.99]"
               >
                 {isLoading ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin text-white" />
+                    <Loader2 className="w-4 h-4 animate-spin text-[#2563EB]" />
                     <span>Signing in...</span>
                   </>
                 ) : (
@@ -186,8 +186,8 @@ export const LoginPage: React.FC = () => {
             </form>
 
             {/* Quick Demonstration Persona Switcher */}
-            <div className="pt-6 border-t border-slate-200 space-y-2.5">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider block text-center">
+            <div className="pt-6 border-t border-blue-400/30 space-y-2.5">
+              <span className="text-xs font-semibold text-blue-100 uppercase tracking-wider block text-center">
                 Demo Quick Access:
               </span>
               <div className="grid grid-cols-4 gap-2">
@@ -198,8 +198,8 @@ export const LoginPage: React.FC = () => {
                     onClick={() => handleQuickFill(acc.email)}
                     className={`py-2 px-2.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer text-center ${
                       email === acc.email
-                        ? 'bg-blue-50 text-blue-700 border-blue-300 shadow-sm'
-                        : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-200 shadow-sm'
+                        ? 'bg-white text-[#2563EB] border-white shadow-sm'
+                        : 'bg-blue-600/40 hover:bg-blue-600/70 text-white border-blue-300/30'
                     }`}
                   >
                     {acc.label}
@@ -210,7 +210,7 @@ export const LoginPage: React.FC = () => {
           </div>
 
           {/* Clean Terms Link */}
-          <div className="pt-6 border-t border-slate-200 text-center text-[11px] text-slate-400 leading-relaxed max-w-sm mx-auto">
+          <div className="pt-6 border-t border-blue-400/30 text-center text-[11px] text-blue-100 leading-relaxed max-w-sm mx-auto">
             By signing in, you agree to the SmartTicket Terms of Service and Privacy Policy.
           </div>
         </div>
