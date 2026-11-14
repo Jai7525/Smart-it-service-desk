@@ -47,6 +47,11 @@ export const api = {
   // Auth & Profile (SRS 7.1)
   // ==========================================
   auth: {
+    login: (email: string) =>
+      apiFetch<any>('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email }),
+      }),
     getMe: () => apiFetch<any>('/auth/me'),
   },
 

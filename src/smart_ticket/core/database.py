@@ -1,8 +1,12 @@
 from sqlmodel import SQLModel, create_engine, Session
 from smart_ticket.core.config import settings
 
-# SQLite connection args for multithreaded FastAPI access
-connect_args = {"check_same_thread": False} if settings.DATABASE_URL.startswith("sqlite") else {}
+# Connection args
+if settings.DATABASE_URL.startswith("sqlite"):
+    connect_args = {"check_same_thread": False}
+else:
+    # Disable prepared statements on Supabase transaction/session poolers to avoid DuplicatePreparedStatement
+    connect_args = {"prepare_threshold": None}
 
 engine = create_engine(
     settings.DATABASE_URL,

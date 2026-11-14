@@ -12,12 +12,14 @@ class ProfileBase(BaseModel):
     email: str
     full_name: str
     role: UserRole = UserRole.EMPLOYEE
+    department_name: Optional[str] = None
 
 
 class ProfileRead(ProfileBase):
     id: uuid.UUID
     is_active: bool
     is_available: bool
+    department_id: Optional[uuid.UUID] = None
     created_at: datetime
 
     class Config:

@@ -47,6 +47,17 @@ def test_lowest_active_workload_selected():
     Among eligible agents, the available agent with lowest active workload is selected.
     """
     with Session(engine) as session:
+        # Close test incidents to ensure test determinism regardless of prior run accumulation
+        open_test_incs = session.exec(
+            select(Incident).where(
+                Incident.ticket_number.like("INC-103%"),
+                Incident.status.in_([TicketStatus.OPEN, TicketStatus.IN_PROGRESS])
+            )
+        ).all()
+        for ti in open_test_incs:
+            ti.status = TicketStatus.CLOSED
+        session.commit()
+
         team_id, agent_id = AssignmentEngine.assign_ticket(session, IncidentCategory.NETWORK)
         assert agent_id is not None
         assigned_agent = session.get(Profile, agent_id)

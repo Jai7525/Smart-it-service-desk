@@ -5,7 +5,7 @@ import uuid
 from pydantic import BaseModel
 from smart_ticket.core.database import get_session
 from smart_ticket.core.security import require_roles, get_current_user
-from smart_ticket.models import Profile, SupportTeam, SLAPolicy, UserRole, IncidentCategory, PriorityLevel
+from smart_ticket.models import Profile, SupportTeam, SLAPolicy, UserRole, IncidentCategory, PriorityLevel, Department
 from smart_ticket.schemas import ProfileRead
 
 router = APIRouter(prefix="/admin", tags=["System Administration"])
@@ -32,19 +32,39 @@ class SlaUpdateSchema(BaseModel):
 
 @router.get("/users", response_model=List[ProfileRead])
 def list_all_users(session: Session = Depends(get_session)):
-    return session.exec(select(Profile).order_by(Profile.created_at.desc())).all()
+    users = session.exec(select(Profile).order_by(Profile.created_at.desc())).all()
+    # Enrich with department_name if available
+    dept_map = {d.id: d.name for d in session.exec(select(Department)).all()}
+    for u in users:
+        if u.department_id and u.department_id in dept_map:
+            setattr(u, "department_name", dept_map[u.department_id])
+    return users
 
 
 @router.post("/users", response_model=ProfileRead, status_code=status.HTTP_201_CREATED)
 def create_user_account(user_in: UserCreateSchema, session: Session = Depends(get_session)):
-    existing = session.exec(select(Profile).where(Profile.email == user_in.email)).first()
+    clean_email = user_in.email.strip().lower()
+    existing = session.exec(select(Profile).where(Profile.email.ilike(clean_email))).first()
     if existing:
         raise HTTPException(status_code=400, detail="User with this email already exists")
 
+    dept_id = None
+    if user_in.department_name:
+        dept = session.exec(
+            select(Department).where(Department.name.ilike(user_in.department_name.strip()))
+        ).first()
+        if not dept:
+            dept = Department(name=user_in.department_name.strip())
+            session.add(dept)
+            session.commit()
+            session.refresh(dept)
+        dept_id = dept.id
+
     new_user = Profile(
-        email=user_in.email,
-        full_name=user_in.full_name,
+        email=clean_email,
+        full_name=user_in.full_name.strip(),
         role=user_in.role,
+        department_id=dept_id,
         is_active=True,
         is_available=True
     )
