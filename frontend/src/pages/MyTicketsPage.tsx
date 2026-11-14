@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { StatusBadge } from '../components/StatusBadge';
 import { PriorityBadge } from '../components/PriorityBadge';
-import { mockIncidents } from '../data/mockData';
 import { Incident } from '../types';
 import { api } from '../services/api';
 import {
@@ -31,7 +30,7 @@ export const MyTicketsPage: React.FC = () => {
   const fetchTickets = async () => {
     try {
       const data = await api.incidents.list();
-      if (Array.isArray(data) && data.length > 0) {
+      if (Array.isArray(data)) {
         setIncidents(data);
         // Check for ticket query param or location state to auto-open
         const params = new URLSearchParams(location.search);
@@ -40,11 +39,9 @@ export const MyTicketsPage: React.FC = () => {
           const match = data.find((t) => t.ticket_number === ticketParam || t.id === ticketParam);
           if (match) setSelectedTicket(match);
         }
-      } else {
-        setIncidents(mockIncidents);
       }
     } catch (e) {
-      setIncidents(mockIncidents);
+      console.warn('Could not fetch tickets:', e);
     }
   };
 

@@ -3,7 +3,6 @@ import { useAuth } from '../context/AuthContext';
 import { StatCard } from '../components/StatCard';
 import { StatusBadge } from '../components/StatusBadge';
 import { PriorityBadge } from '../components/PriorityBadge';
-import { mockIncidents } from '../data/mockData';
 import { Incident } from '../types';
 import { api } from '../services/api';
 import { Link } from 'react-router-dom';
@@ -21,10 +20,10 @@ import {
 
 export const EmployeeDashboard: React.FC = () => {
   const { user } = useAuth();
-  const [tickets, setTickets] = useState<Incident[]>(mockIncidents);
+  const [tickets, setTickets] = useState<Incident[]>([]);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [isLoading, setIsLoading] = useState(false);
-  const [isLiveConnected, setIsLiveConnected] = useState(false);
+  const [isLiveConnected, setIsLiveConnected] = useState(true);
 
   // Confirmation & Rejection Dialog state
   const [confirmDialogTicket, setConfirmDialogTicket] = useState<Incident | null>(null);
@@ -36,12 +35,12 @@ export const EmployeeDashboard: React.FC = () => {
     setIsLoading(true);
     try {
       const data = await api.incidents.list();
-      if (Array.isArray(data) && data.length > 0) {
+      if (Array.isArray(data)) {
         setTickets(data);
         setIsLiveConnected(true);
       }
     } catch (err) {
-      // Graceful fallback to mock data if backend not active
+      console.warn('Could not fetch employee tickets:', err);
       setIsLiveConnected(false);
     } finally {
       setIsLoading(false);

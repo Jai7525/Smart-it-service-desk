@@ -20,7 +20,6 @@ import {
 import { StatCard } from '../components/StatCard';
 import { StatusBadge } from '../components/StatusBadge';
 import { PriorityBadge } from '../components/PriorityBadge';
-import { mockIncidents, mockProblems } from '../data/mockData';
 import { Problem, IncidentCategory } from '../types';
 import { api } from '../services/api';
 import {
@@ -112,13 +111,11 @@ export const ManagerDashboard: React.FC = () => {
   const fetchProblems = async () => {
     try {
       const data = await api.problems.list();
-      if (Array.isArray(data) && data.length > 0) {
+      if (Array.isArray(data)) {
         setProblems(data);
-      } else {
-        setProblems(mockProblems);
       }
     } catch (e) {
-      setProblems(mockProblems);
+      console.warn('Could not fetch problems:', e);
     }
   };
 
@@ -646,15 +643,16 @@ export const ManagerDashboard: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
-                {mockIncidents
+                {incidents
                   .filter((t) => t.category === 'Network')
+                  .slice(0, 5)
                   .map((t) => (
                     <tr key={t.id} className="hover:bg-slate-50/60">
                       <td className="py-3 px-4 font-mono font-bold text-blue-600">{t.ticket_number}</td>
                       <td className="py-3 px-4 font-medium text-slate-900">{t.subject}</td>
                       <td className="py-3 px-4"><PriorityBadge priority={t.priority} /></td>
                       <td className="py-3 px-4"><StatusBadge status={t.status} /></td>
-                      <td className="py-3 px-4 text-slate-600">Employee #{t.reporter_id}</td>
+                      <td className="py-3 px-4 text-slate-600">{t.assigned_agent_name || 'Unassigned'}</td>
                       <td className="py-3 px-4 text-right font-mono text-slate-400">T-35m</td>
                     </tr>
                   ))}

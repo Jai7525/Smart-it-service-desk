@@ -8,7 +8,7 @@ from smart_ticket.core.database import get_session
 from smart_ticket.core.security import get_current_user, require_roles
 from smart_ticket.models import (
     Incident, Profile, UserRole, TicketStatus, Assignment, TicketComment,
-    Notification, NotificationType, SupportTeam, ActivityLog
+    Notification, NotificationType, SupportTeam, ActivityLog, TeamMember
 )
 from smart_ticket.schemas import (
     IncidentCreate, IncidentRead, IncidentStatusUpdate,
@@ -176,24 +176,40 @@ def list_incidents(
 ):
     """
     FR-02 RBAC:
-    - Employees see only their own submitted tickets.
-    - Agents see tickets assigned to them or their team.
-    - Managers & Admins see all tickets.
+    - Employees see only their own submitted tickets (matching current_user.id).
+    - Agents see tickets assigned to them or their category teams.
+    - Managers & Admins see all tickets across the enterprise.
     """
     query = select(Incident)
+
+    if current_user.role == UserRole.EMPLOYEE:
+        query = query.where(Incident.reporter_id == current_user.id)
+    elif current_user.role == UserRole.AGENT:
+        # Agent sees tickets assigned directly to them OR assigned to teams they are a member of
+        agent_teams = session.exec(
+            select(TeamMember.team_id).where(TeamMember.agent_id == current_user.id)
+        ).all()
+        conditions = [Incident.assigned_agent_id == current_user.id]
+        if agent_teams:
+            conditions.append(Incident.assigned_team_id.in_(agent_teams))
+        from sqlalchemy import or_
+        query = query.where(or_(*conditions))
+
     incidents = session.exec(query.order_by(Incident.created_at.desc())).all()
 
     # Pre-fetch agent and team names
     agent_ids = {i.assigned_agent_id for i in incidents if i.assigned_agent_id}
     team_ids = {i.assigned_team_id for i in incidents if i.assigned_team_id}
+    reporter_ids = {i.reporter_id for i in incidents if i.reporter_id}
     
-    agents_map = {p.id: p.full_name for p in session.exec(select(Profile).where(Profile.id.in_(agent_ids))).all()} if agent_ids else {}
+    all_user_ids = agent_ids.union(reporter_ids)
+    profiles_map = {p.id: p.full_name for p in session.exec(select(Profile).where(Profile.id.in_(all_user_ids))).all()} if all_user_ids else {}
     teams_map = {t.id: t.name for t in session.exec(select(SupportTeam).where(SupportTeam.id.in_(team_ids))).all()} if team_ids else {}
 
     results = []
     for inc in incidents:
         item = IncidentRead.model_validate(inc)
-        item.assigned_agent_name = agents_map.get(inc.assigned_agent_id, "Auto-Dispatch Queue") if inc.assigned_agent_id else "Auto-Dispatch Queue"
+        item.assigned_agent_name = profiles_map.get(inc.assigned_agent_id, "Auto-Dispatch Queue") if inc.assigned_agent_id else "Auto-Dispatch Queue"
         item.assigned_team_name = teams_map.get(inc.assigned_team_id)
         results.append(item)
 

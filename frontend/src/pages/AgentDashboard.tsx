@@ -4,7 +4,6 @@ import { useAuth } from '../context/AuthContext';
 import { StatCard } from '../components/StatCard';
 import { StatusBadge } from '../components/StatusBadge';
 import { PriorityBadge } from '../components/PriorityBadge';
-import { mockIncidents } from '../data/mockData';
 import { Incident } from '../types';
 import { api } from '../services/api';
 import {
@@ -40,40 +39,40 @@ export const AgentDashboard: React.FC = () => {
         api.admin.listTeams(),
       ]);
 
-      if (incidentData.status === 'fulfilled' && Array.isArray(incidentData.value) && incidentData.value.length > 0) {
+      if (incidentData.status === 'fulfilled' && Array.isArray(incidentData.value)) {
         setIncidents(incidentData.value);
-        // Check for ticket query param to auto-select
-        const params = new URLSearchParams(location.search);
-        const ticketParam = params.get('ticket') || (location.state as any)?.ticketNumber;
-        if (ticketParam) {
-          const match = incidentData.value.find((t: Incident) => t.ticket_number === ticketParam || t.id === ticketParam);
-          if (match) {
-            setSelectedTicket(match);
-            return;
+        if (incidentData.value.length > 0) {
+          // Check for ticket query param to auto-select
+          const params = new URLSearchParams(location.search);
+          const ticketParam = params.get('ticket') || (location.state as any)?.ticketNumber;
+          if (ticketParam) {
+            const match = incidentData.value.find((t: Incident) => t.ticket_number === ticketParam || t.id === ticketParam);
+            if (match) {
+              setSelectedTicket(match);
+              return;
+            }
           }
-        }
 
-        // Default selected ticket to the logged-in agent's first ticket if available, else first incident
-        const myFirst = incidentData.value.find((t: Incident) => {
-          if (!user) return true;
-          if (t.assigned_agent_id && user.id && t.assigned_agent_id === user.id) return true;
-          if (t.assigned_agent_name && user.full_name) {
-            return t.assigned_agent_name.toLowerCase().includes(user.full_name.toLowerCase());
-          }
-          return false;
-        });
-        setSelectedTicket(myFirst || incidentData.value[0]);
-      } else {
-        setIncidents(mockIncidents);
-        setSelectedTicket(mockIncidents[0]);
+          // Default selected ticket to the logged-in agent's first ticket if available, else first incident
+          const myFirst = incidentData.value.find((t: Incident) => {
+            if (!user) return true;
+            if (t.assigned_agent_id && user.id && t.assigned_agent_id === user.id) return true;
+            if (t.assigned_agent_name && user.full_name) {
+              return t.assigned_agent_name.toLowerCase().includes(user.full_name.toLowerCase());
+            }
+            return false;
+          });
+          setSelectedTicket(myFirst || incidentData.value[0]);
+        } else {
+          setSelectedTicket(null);
+        }
       }
 
       if (teamsData.status === 'fulfilled' && Array.isArray(teamsData.value)) {
         setTeams(teamsData.value);
       }
     } catch (e) {
-      setIncidents(mockIncidents);
-      setSelectedTicket(mockIncidents[0]);
+      console.warn('Could not fetch agent tickets:', e);
     }
   };
 

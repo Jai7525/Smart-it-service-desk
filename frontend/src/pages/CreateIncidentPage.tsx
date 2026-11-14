@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ImpactLevel, UrgencyLevel } from '../types';
+import { api } from '../services/api';
 import { ArrowLeft, Sparkles, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 export const CreateIncidentPage: React.FC = () => {
@@ -33,39 +34,16 @@ export const CreateIncidentPage: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // Connect to live FastAPI backend proxy (/api/incidents/)
-      const response = await fetch('/api/incidents/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          subject,
-          description,
-          impact,
-          urgency,
-          location,
-        }),
+      const data = await api.incidents.create({
+        subject,
+        description,
+        impact,
+        urgency,
+        location,
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        setSubmittedTicket(data);
-      } else {
-        // Fallback simulation if backend server is not running on port 8080
-        setSubmittedTicket({
-          ticket_number: 'INC-1006',
-          category: previewCategory,
-          priority: impact === 'high' && urgency === 'high' ? 'critical' : 'medium',
-          status: 'open',
-          response_deadline: new Date(Date.now() + 60 * 60000).toISOString(),
-        });
-      }
-    } catch (err) {
-      setSubmittedTicket({
-        ticket_number: 'INC-1006',
-        category: previewCategory,
-        priority: 'medium',
-        status: 'open',
-      });
+      setSubmittedTicket(data);
+    } catch (err: any) {
+      alert(`Incident submission error: ${err.message || 'Please check connection'}`);
     } finally {
       setIsSubmitting(false);
     }
