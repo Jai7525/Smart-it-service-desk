@@ -434,21 +434,8 @@ export const TopNavbar: React.FC = () => {
 
               <div className="py-1">
                 <button
-                  onClick={() => {
-                    setUserMenuOpen(false);
-                    navigate('/login');
-                  }}
-                  className="w-full text-left px-4 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center justify-between"
-                >
-                  <span>Switch Role / Portal</span>
-                  <span className="text-[10px] text-slate-400 font-mono">/login</span>
-                </button>
-              </div>
-
-              <div className="py-1">
-                <button
                   onClick={handleLogout}
-                  className="w-full text-left px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 flex items-center gap-2 font-medium"
+                  className="w-full text-left px-4 py-2 text-xs text-rose-600 hover:bg-rose-50 flex items-center gap-2 font-medium transition-colors"
                 >
                   <LogOut className="w-3.5 h-3.5" />
                   Sign Out
