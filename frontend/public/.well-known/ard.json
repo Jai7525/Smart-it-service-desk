@@ -1,14 +1,25 @@
 {
-  "$schema": "https://agenticresourcediscovery.org/schema/v1/manifest.json",
+  "version": "1.0",
   "name": "SmartTicket ITSM",
   "description": "Enterprise IT incident triage, automated workflow dispatch, and SLA monitoring platform.",
-  "version": "1.0.0",
-  "homepage": "https://smart-itsm-workflow-platform.vercel.app/",
-  "resources": [
+  "entries": [
     {
-      "type": "api",
-      "name": "SmartTicket API",
-      "url": "https://smart-it-service-desk-1qwo.onrender.com/api"
+      "name": "SmartTicket Application",
+      "description": "Unified IT Service Management user interface and login portal.",
+      "url": "https://smart-itsm-workflow-platform.vercel.app/",
+      "type": "web"
+    },
+    {
+      "name": "SmartTicket REST API",
+      "description": "FastAPI backend services for incidents, triage, and SLA enforcement.",
+      "url": "https://smart-it-service-desk-1qwo.onrender.com/api",
+      "type": "api"
+    },
+    {
+      "name": "IT Knowledge Base",
+      "description": "Verified technical self-service articles and troubleshooting documentation.",
+      "url": "https://smart-itsm-workflow-platform.vercel.app/knowledge",
+      "type": "documentation"
     }
   ]
 }
