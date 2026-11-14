@@ -138,7 +138,7 @@ export const LoginPage: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-1.5">
                 <div className="relative">
-                  <Mail className="w-4 h-4 text-blue-200 absolute left-4 top-1/2 -translate-y-1/2" />
+                  <Mail className="w-4 h-4 text-white absolute left-4 top-1/2 -translate-y-1/2" />
                   <input
                     type="email"
                     required
@@ -146,7 +146,7 @@ export const LoginPage: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Work Email"
-                    className="w-full bg-blue-700/35 border border-blue-300/35 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-blue-100 focus:outline-none focus:ring-2 focus:ring-white/40 focus:border-white focus:bg-blue-700/50 transition-all font-medium"
+                    className="w-full bg-blue-700/35 border border-white/40 rounded-xl pl-11 pr-4 py-3 text-sm text-white placeholder:text-white placeholder:font-medium focus:outline-none focus:ring-2 focus:ring-white focus:border-white focus:bg-blue-700/55 transition-all font-medium"
                   />
                 </div>
               </div>
