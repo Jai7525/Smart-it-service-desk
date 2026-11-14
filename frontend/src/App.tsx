@@ -9,6 +9,7 @@ import { CreateIncidentPage } from './pages/CreateIncidentPage';
 import { MyTicketsPage } from './pages/MyTicketsPage';
 import { KnowledgeBasePage } from './pages/KnowledgeBasePage';
 import { AgentDashboard } from './pages/AgentDashboard';
+import { AgentWorkspacePage } from './pages/AgentWorkspacePage';
 import { ManagerDashboard } from './pages/ManagerDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { ServiceCatalogPage } from './pages/ServiceCatalogPage';
@@ -29,7 +30,7 @@ const DashboardRouter: React.FC = () => {
     case 'employee':
       return <EmployeeDashboard />;
     case 'agent':
-      return <AgentDashboard />;
+      return <AgentWorkspacePage />;
     case 'manager':
       return <ManagerDashboard />;
     case 'admin':

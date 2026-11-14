@@ -43,7 +43,7 @@ interface SlaThreshold {
 
 export const AdminDashboard: React.FC = () => {
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState<'users' | 'teams' | 'sla' | 'departments'>('users');
+  const [activeTab, setActiveTab] = useState<'overview' | 'users' | 'teams' | 'sla' | 'departments'>('overview');
 
   useEffect(() => {
     if (location.pathname === '/teams') {
@@ -52,8 +52,10 @@ export const AdminDashboard: React.FC = () => {
       setActiveTab('sla');
     } else if (location.pathname === '/departments') {
       setActiveTab('departments');
-    } else if (location.pathname === '/users' || location.pathname === '/') {
+    } else if (location.pathname === '/users') {
       setActiveTab('users');
+    } else if (location.pathname === '/') {
+      setActiveTab('overview');
     }
   }, [location.pathname]);
 
@@ -76,7 +78,7 @@ export const AdminDashboard: React.FC = () => {
             full_name: item.full_name,
             email: item.email,
             role: item.role,
-            department: 'IT Operations',
+            department: item.department_name || 'IT Operations',
             isActive: item.is_active,
           }))
         );
@@ -88,8 +90,8 @@ export const AdminDashboard: React.FC = () => {
             id: team.id,
             name: team.name,
             category: team.category,
-            agentsCount: 2,
-            activeWorkload: 1,
+            agentsCount: team.agents_count ?? 1,
+            activeWorkload: team.active_workload ?? 0,
           }))
         );
       }
@@ -227,6 +229,16 @@ export const AdminDashboard: React.FC = () => {
         {/* Tab Switcher */}
         <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-md text-xs font-semibold">
           <button
+            onClick={() => setActiveTab('overview')}
+            className={`px-3 py-1.5 rounded transition-colors ${
+              activeTab === 'overview'
+                ? 'bg-white text-slate-900 shadow-xs'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            System Overview
+          </button>
+          <button
             onClick={() => setActiveTab('users')}
             className={`px-3 py-1.5 rounded transition-colors ${
               activeTab === 'users'
@@ -271,11 +283,174 @@ export const AdminDashboard: React.FC = () => {
 
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
-        <StatCard title="Active Users" value={users.length} subtitle="4 Roles configured" icon={Users} />
-        <StatCard title="Support Teams" value={teams.length} subtitle="16 Agents dispatched" icon={Layers} />
-        <StatCard title="SLA Policies" value={`${slaPolicies.length} Active`} subtitle="Strict priority matrices" icon={Clock} />
-        <StatCard title="System Health" value="100%" subtitle="FastAPI + Supabase OK" badge={{ text: 'Nominal', positive: true }} icon={ShieldCheck} />
+        <StatCard
+          title="Active Users"
+          value={users.length}
+          subtitle={`${users.filter(u => u.role === 'employee').length} Employees, ${users.filter(u => u.role === 'agent').length} Agents, ${users.filter(u => u.role === 'manager').length} Mgr, ${users.filter(u => u.role === 'admin').length} Admins`}
+          icon={Users}
+        />
+        <StatCard
+          title="Support Teams"
+          value={teams.length}
+          subtitle={`${teams.reduce((acc, t) => acc + (t.agentsCount || 0), 0)} agents enrolled`}
+          icon={Layers}
+        />
+        <StatCard
+          title="SLA Policies"
+          value={`${slaPolicies.length} Active`}
+          subtitle="Strict priority matrices"
+          icon={Clock}
+        />
+        <StatCard
+          title="System Health"
+          value="100%"
+          subtitle="FastAPI + Supabase OK"
+          badge={{ text: 'Nominal', positive: true }}
+          icon={ShieldCheck}
+        />
       </div>
+
+      {/* ========================================================================= */}
+      {/* TAB 0: SYSTEM OVERVIEW (COCKPIT & INFRASTRUCTURE STATUS)                  */}
+      {/* ========================================================================= */}
+      {activeTab === 'overview' && (
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            
+            {/* Left 7 Columns: Active Support Teams Breakdown */}
+            <div className="lg:col-span-7 bg-white border border-slate-200 rounded-xl overflow-hidden shadow-xs">
+              <div className="px-5 py-3.5 border-b border-slate-200 flex items-center justify-between">
+                <div>
+                  <h2 className="font-semibold text-xs text-slate-900 uppercase tracking-wider">
+                    Support Teams & Dispatch Status
+                  </h2>
+                  <p className="text-[11px] text-slate-500 mt-0.5">
+                    Live category queue allocations and enrolled active personnel
+                  </p>
+                </div>
+                <button
+                  onClick={() => setActiveTab('teams')}
+                  className="text-xs text-blue-600 hover:text-blue-700 font-semibold"
+                >
+                  Manage Teams →
+                </button>
+              </div>
+
+              <div className="divide-y divide-slate-100">
+                {teams.map((t) => (
+                  <div key={t.id || t.name} className="p-4 flex items-center justify-between hover:bg-slate-50/60 transition-colors">
+                    <div>
+                      <h4 className="font-bold text-xs text-slate-900">{t.name}</h4>
+                      <p className="text-[11px] text-slate-400 font-mono mt-0.5">
+                        Category: <span className="text-slate-600 font-semibold">{t.category}</span>
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="px-2.5 py-1 rounded bg-slate-100 text-slate-700 text-xs font-mono font-medium">
+                        {t.agentsCount} Active Agents
+                      </span>
+                      <span className="px-2.5 py-1 rounded bg-blue-50 text-blue-700 border border-blue-200 text-xs font-mono font-semibold">
+                        {t.activeWorkload} active tickets
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right 5 Columns: System Services & RBAC breakdown */}
+            <div className="lg:col-span-5 space-y-6">
+              
+              {/* Infrastructure Services Box */}
+              <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-xs space-y-4">
+                <h3 className="font-semibold text-xs text-slate-900 uppercase tracking-wider pb-2 border-b border-slate-100">
+                  Infrastructure Health & Daemons
+                </h3>
+
+                <div className="space-y-3 text-xs">
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-600 font-medium">REST API Engine</span>
+                    <span className="inline-flex items-center gap-1.5 text-emerald-700 font-semibold text-[11px]">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                      FastAPI 0.115 (Port 8080)
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-600 font-medium">Relational Database</span>
+                    <span className="inline-flex items-center gap-1.5 text-emerald-700 font-semibold text-[11px]">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      Supabase PostgreSQL Tokyo
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-600 font-medium">SLA Watchdog Daemon</span>
+                    <span className="inline-flex items-center gap-1.5 text-emerald-700 font-semibold text-[11px]">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                      Continuous 60s Polling
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-600 font-medium">Incident Correlation (RCA)</span>
+                    <span className="inline-flex items-center gap-1.5 text-blue-700 font-semibold text-[11px]">
+                      <span className="w-2 h-2 rounded-full bg-blue-500" />
+                      Rolling 30m Window Active
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* User Directory Quick Summary */}
+              <div className="bg-slate-900 text-white rounded-xl p-5 shadow-sm space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-semibold text-slate-300 uppercase tracking-wider">
+                    Enterprise User Directory
+                  </span>
+                  <span className="px-2 py-0.5 rounded bg-blue-600 text-white font-mono text-[11px] font-bold">
+                    {users.length} Enrolled
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2 text-xs pt-1">
+                  <div className="p-2.5 rounded bg-slate-800/80 border border-slate-700">
+                    <div className="text-slate-400 text-[10px]">Employees</div>
+                    <div className="text-base font-extrabold text-white mt-0.5">
+                      {users.filter(u => u.role === 'employee').length}
+                    </div>
+                  </div>
+                  <div className="p-2.5 rounded bg-slate-800/80 border border-slate-700">
+                    <div className="text-slate-400 text-[10px]">Support Agents</div>
+                    <div className="text-base font-extrabold text-blue-400 mt-0.5">
+                      {users.filter(u => u.role === 'agent').length}
+                    </div>
+                  </div>
+                  <div className="p-2.5 rounded bg-slate-800/80 border border-slate-700">
+                    <div className="text-slate-400 text-[10px]">IT Managers</div>
+                    <div className="text-base font-extrabold text-purple-400 mt-0.5">
+                      {users.filter(u => u.role === 'manager').length}
+                    </div>
+                  </div>
+                  <div className="p-2.5 rounded bg-slate-800/80 border border-slate-700">
+                    <div className="text-slate-400 text-[10px]">Administrators</div>
+                    <div className="text-base font-extrabold text-emerald-400 mt-0.5">
+                      {users.filter(u => u.role === 'admin').length}
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setActiveTab('users')}
+                  className="w-full mt-2 py-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold rounded-lg border border-slate-700 transition-colors"
+                >
+                  View Full User Directory →
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      )}
 
       {/* ========================================================================= */}
       {/* TAB 1: USER DIRECTORY & RBAC ASSIGNMENT (SRS Section 6 & FR-02) */}
@@ -503,11 +678,46 @@ export const AdminDashboard: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
             {[
-              { name: 'Engineering & DevOps', code: 'ENG-100', head: 'Sarah Connor', count: users.filter(u => u.department === 'Engineering' || u.role === 'employee').length || 8, budget: '$45,000 / mo', criticalServices: 'GitLab, Kubernetes, CI/CD Pipeline' },
-              { name: 'IT Operations & Infrastructure', code: 'ITO-200', head: 'Devon Vance', count: users.filter(u => u.role === 'agent' || u.role === 'admin').length || 6, budget: '$72,000 / mo', criticalServices: 'Core Switches, Firewalls, SSO Gateway' },
-              { name: 'Human Resources & People', code: 'HRP-300', head: 'Rachel Green', count: users.filter(u => u.department === 'Human Resources').length || 4, budget: '$18,000 / mo', criticalServices: 'Workday, Payroll Engine, Employee Portal' },
-              { name: 'Finance & Accounting', code: 'FIN-400', head: 'Marcus Vance', count: users.filter(u => u.department === 'Finance').length || 5, budget: '$28,000 / mo', criticalServices: 'SAP ERP, Expense Reconciliation' },
-              { name: 'Customer Success & Operations', code: 'OPS-500', head: 'Alex Rivers', count: 7, budget: '$22,000 / mo', criticalServices: 'Zendesk, CRM, Telephony System' },
+              {
+                name: 'Engineering & DevOps',
+                code: 'ENG-100',
+                head: 'Sarah Connor',
+                count: users.filter(u => u.department?.toLowerCase().includes('eng') || u.role === 'employee').length,
+                budget: '$45,000 / mo',
+                criticalServices: 'GitLab, Kubernetes, CI/CD Pipeline'
+              },
+              {
+                name: 'IT Operations & Infrastructure',
+                code: 'ITO-200',
+                head: 'Devon Vance',
+                count: users.filter(u => u.department?.toLowerCase().includes('it') || u.role === 'agent' || u.role === 'admin').length,
+                budget: '$72,000 / mo',
+                criticalServices: 'Core Switches, Firewalls, SSO Gateway'
+              },
+              {
+                name: 'Human Resources & People',
+                code: 'HRP-300',
+                head: 'Rachel Green',
+                count: users.filter(u => u.department?.toLowerCase().includes('hr') || u.department?.toLowerCase().includes('human')).length || 2,
+                budget: '$18,000 / mo',
+                criticalServices: 'Workday, Payroll Engine, Employee Portal'
+              },
+              {
+                name: 'Finance & Accounting',
+                code: 'FIN-400',
+                head: 'Marcus Vance',
+                count: users.filter(u => u.department?.toLowerCase().includes('fin')).length || 2,
+                budget: '$28,000 / mo',
+                criticalServices: 'SAP ERP, Expense Reconciliation'
+              },
+              {
+                name: 'Customer Success & Support',
+                code: 'CSS-500',
+                head: 'Alex Rivers',
+                count: users.filter(u => u.role === 'agent').length,
+                budget: '$22,000 / mo',
+                criticalServices: 'Service Desk, CRM, Telephony'
+              },
             ].map((d) => (
               <div key={d.code} className="p-4 bg-slate-50/70 border border-slate-200 rounded-lg space-y-2 hover:border-blue-300 transition-colors">
                 <div className="flex items-start justify-between">

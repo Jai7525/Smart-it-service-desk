@@ -71,6 +71,8 @@ def create_user_account(user_in: UserCreateSchema, session: Session = Depends(ge
     session.add(new_user)
     session.commit()
     session.refresh(new_user)
+    if dept_id and user_in.department_name:
+        setattr(new_user, "department_name", user_in.department_name.strip())
     return new_user
 
 
@@ -88,7 +90,31 @@ def toggle_user_active(user_id: uuid.UUID, session: Session = Depends(get_sessio
 
 @router.get("/teams")
 def list_teams(session: Session = Depends(get_session)):
-    return session.exec(select(SupportTeam)).all()
+    teams = session.exec(select(SupportTeam)).all()
+    results = []
+    from smart_ticket.models import TeamMember, Incident, TicketStatus
+    from sqlmodel import func
+
+    for t in teams:
+        agents_count = session.exec(
+            select(func.count(TeamMember.agent_id)).where(TeamMember.team_id == t.id)
+        ).one()
+        active_workload = session.exec(
+            select(func.count(Incident.id)).where(
+                Incident.assigned_team_id == t.id,
+                Incident.status.in_([TicketStatus.OPEN, TicketStatus.IN_PROGRESS, TicketStatus.REOPENED])
+            )
+        ).one()
+        results.append({
+            "id": str(t.id),
+            "name": t.name,
+            "category": t.category,
+            "description": t.description,
+            "created_at": t.created_at,
+            "agents_count": agents_count,
+            "active_workload": active_workload,
+        })
+    return results
 
 
 @router.post("/teams", status_code=status.HTTP_201_CREATED)
