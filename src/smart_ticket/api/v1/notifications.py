@@ -63,3 +63,23 @@ def mark_notification_as_read(
     session.commit()
     return {"status": "success", "message": "Notification marked as read"}
 
+
+@router.patch("/mark-all-read", status_code=status.HTTP_200_OK)
+def mark_all_notifications_read(
+    current_user: Profile = Depends(get_current_user),
+    session: Session = Depends(get_session)
+):
+    """
+    Marks all notifications for the logged-in user as read.
+    """
+    notifications = session.exec(
+        select(Notification)
+        .where(Notification.user_id == current_user.id, Notification.is_read == False)
+    ).all()
+    for n in notifications:
+        n.is_read = True
+        session.add(n)
+    session.commit()
+    return {"status": "success", "count": len(notifications), "message": "All notifications marked as read"}
+
+

@@ -147,6 +147,10 @@ export const api = {
       apiFetch<any>(`/notifications/${id}/read`, {
         method: 'PATCH',
       }),
+    markAllAsRead: () =>
+      apiFetch<any>('/notifications/mark-all-read', {
+        method: 'PATCH',
+      }),
   },
 
   // ==========================================
