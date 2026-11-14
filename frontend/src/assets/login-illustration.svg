@@ -1,80 +1,165 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 450" width="100%" height="100%" fill="none">
-  <!-- Foliage / Plants at Base -->
-  <g opacity="0.9">
-    <path d="M70 410 C50 380 45 340 75 320 C85 350 80 390 70 410 Z" fill="#1E293B" />
-    <path d="M50 410 C30 390 20 360 40 340 C55 365 55 395 50 410 Z" fill="#2563EB" />
-    <path d="M90 410 C95 380 115 350 135 365 C125 390 105 405 90 410 Z" fill="#1E293B" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500" fill="none">
+  <defs>
+    <!-- Soft Shadows -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="125%" height="130%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0f172a" flood-opacity="0.08" />
+    </filter>
+    <filter id="badgeShadow" x="-15%" y="-15%" width="130%" height="135%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#2563eb" flood-opacity="0.15" />
+    </filter>
+    <!-- Linear Gradients -->
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6" />
+      <stop offset="100%" stop-color="#1d4ed8" />
+    </linearGradient>
+    <linearGradient id="screenGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#e2e8f0" />
+    </linearGradient>
+  </defs>
+
+  <!-- ================= BACKGROUND SUBTLE ACCENTS ================= -->
+  <!-- Ambient Soft Circles -->
+  <circle cx="300" cy="270" r="180" fill="#eff6ff" />
+  <circle cx="480" cy="120" r="45" fill="#f1f5f9" />
+  
+  <!-- Sparkles / Stars -->
+  <path d="M120 140 L124 152 L136 156 L124 160 L120 172 L116 160 L104 156 L116 152 Z" fill="#93c5fd" />
+  <path d="M470 70 L473 79 L482 82 L473 85 L470 94 L467 85 L458 82 L467 79 Z" fill="#60a5fa" />
+  <path d="M500 370 L503 378 L511 381 L503 384 L500 392 L497 384 L489 381 L497 378 Z" fill="#93c5fd" />
+
+  <!-- Botanical Leaf accents (Reference cartoon style) -->
+  <g stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Bottom Left Leaves -->
+    <path d="M80 430 C 70 380, 110 350, 130 360 C 130 390, 100 420, 80 430 Z" fill="#0f172a" />
+    <path d="M80 430 C 85 400, 105 380, 130 360" stroke="#ffffff" stroke-width="2" />
+    <path d="M60 430 C 45 400, 60 370, 80 375 C 90 395, 75 420, 60 430 Z" fill="#2563eb" />
+    <path d="M95 430 C 115 390, 145 395, 145 410 C 135 425, 110 430, 95 430 Z" fill="#64748b" />
     
-    <path d="M420 410 C440 375 450 335 425 315 C410 345 415 385 420 410 Z" fill="#1E293B" />
-    <path d="M440 410 C460 390 475 360 455 340 C435 360 440 395 440 410 Z" fill="#2563EB" />
-    <path d="M400 410 C390 380 375 350 355 365 C370 390 390 405 400 410 Z" fill="#1E293B" />
+    <!-- Bottom Right Leaves -->
+    <path d="M520 430 C 530 380, 490 350, 470 360 C 470 390, 500 420, 520 430 Z" fill="#0f172a" />
+    <path d="M520 430 C 515 400, 495 380, 470 360" stroke="#ffffff" stroke-width="2" />
+    <path d="M540 430 C 555 400, 540 370, 520 375 C 510 395, 525 420, 540 430 Z" fill="#2563eb" />
   </g>
 
-  <!-- Speech / Chat Bubble -->
-  <path d="M320 120 C320 100 340 90 370 90 H410 C430 90 445 105 445 125 C445 145 430 160 410 160 H360 L335 180 L342 160 C328 155 320 142 320 120 Z" 
-        fill="#FFFFFF" stroke="#0F172A" stroke-width="3" stroke-linejoin="round" />
-  <circle cx="365" cy="125" r="4" fill="#2563EB" />
-  <circle cx="385" cy="125" r="4" fill="#2563EB" />
-  <circle cx="405" cy="125" r="4" fill="#2563EB" />
-
-  <!-- Support Character -->
-  <!-- Hair Back -->
-  <path d="M190 140 C170 160 160 210 180 260 C200 240 220 230 220 200 Z" fill="#0F172A" />
-
-  <!-- Head / Face -->
-  <path d="M210 165 C210 140 230 120 260 120 C285 120 305 135 310 160 C315 190 295 220 265 220 C235 220 210 195 210 165 Z" fill="#FFFFFF" stroke="#0F172A" stroke-width="3" />
+  <!-- ================= WORKSTATION / DESK ================= -->
+  <!-- Desk Surface -->
+  <rect x="130" y="380" width="340" height="12" rx="6" fill="#0f172a" />
   
-  <!-- Hair Curly Outline -->
-  <path d="M210 150 C215 130 235 110 265 110 C295 110 320 125 325 150 C330 165 325 180 315 190 C325 210 315 240 295 245 C285 245 280 235 280 230" fill="none" stroke="#0F172A" stroke-width="3" stroke-linecap="round" />
-  <path d="M235 125 C245 115 260 125 270 120 C280 115 290 125 300 120" fill="none" stroke="#0F172A" stroke-width="3" stroke-linecap="round" />
+  <!-- Modern Desk Stand -->
+  <path d="M220 392 L200 440" stroke="#0f172a" stroke-width="5" stroke-linecap="round" />
+  <path d="M380 392 L400 440" stroke="#0f172a" stroke-width="5" stroke-linecap="round" />
 
-  <!-- Face Details -->
-  <!-- Glasses / Eyes -->
-  <circle cx="255" cy="165" r="7" fill="#0F172A" />
-  <circle cx="285" cy="165" r="7" fill="#0F172A" />
-  <!-- Smile -->
-  <path d="M260 188 Q270 196 280 188" fill="none" stroke="#0F172A" stroke-width="3" stroke-linecap="round" />
-  <!-- Headset -->
-  <path d="M230 140 C230 110 280 100 305 130" fill="none" stroke="#2563EB" stroke-width="4" stroke-linecap="round" />
-  <rect x="298" y="145" width="12" height="24" rx="6" fill="#2563EB" stroke="#0F172A" stroke-width="2" />
-  <path d="M304 165 C304 185 285 195 275 195" fill="none" stroke="#2563EB" stroke-width="3" stroke-linecap="round" />
-  <circle cx="273" cy="195" r="3.5" fill="#0F172A" />
+  <!-- Coffee Mug with Steam -->
+  <rect x="165" y="348" width="22" height="32" rx="4" fill="#ffffff" stroke="#0f172a" stroke-width="3" />
+  <!-- Mug Handle -->
+  <path d="M165 356 C 153 356, 153 372, 165 372" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" />
+  <!-- Steam curls -->
+  <path d="M172 340 C 170 334, 175 330, 173 324" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" />
+  <path d="M179 342 C 177 336, 182 332, 180 326" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" />
 
-  <!-- Body / Vibrant Blue Shirt -->
-  <path d="M195 250 C185 280 170 330 175 410 H345 C350 330 335 280 325 250 C295 240 225 240 195 250 Z" 
-        fill="#2563EB" stroke="#0F172A" stroke-width="3.5" stroke-linejoin="round" />
+  <!-- Mini Potted Succulent on Desk -->
+  <path d="M418 358 L438 358 L434 380 L422 380 Z" fill="#f8fafc" stroke="#0f172a" stroke-width="3" stroke-linejoin="round" />
+  <circle cx="428" cy="350" r="7" fill="#2563eb" stroke="#0f172a" stroke-width="2.5" />
+  <circle cx="423" cy="354" r="5" fill="#38bdf8" stroke="#0f172a" stroke-width="2" />
+  <circle cx="433" cy="354" r="5" fill="#1d4ed8" stroke="#0f172a" stroke-width="2" />
 
-  <!-- Collar / Shirt Details -->
-  <path d="M245 245 L260 275 L275 245" fill="#FFFFFF" stroke="#0F172A" stroke-width="3" />
-
-  <!-- Left Arm holding Laptop Base -->
-  <path d="M195 265 C175 310 190 350 240 355 L310 355 C330 355 335 330 315 320 L270 315" 
-        fill="#2563EB" stroke="#0F172A" stroke-width="3.5" stroke-linejoin="round" />
-
-  <!-- Hand on Laptop -->
-  <path d="M295 320 C310 320 325 325 330 340 C320 345 305 345 295 340 Z" fill="#FFFFFF" stroke="#0F172A" stroke-width="2.5" />
-
-  <!-- Right Arm & Pointing Hand -->
-  <path d="M325 260 C345 290 350 315 335 340" fill="none" stroke="#0F172A" stroke-width="3.5" stroke-linecap="round" />
-  <path d="M305 295 L270 295 C255 295 255 280 270 280 L295 280" 
-        fill="#FFFFFF" stroke="#0F172A" stroke-width="3" stroke-linecap="round" />
-
-  <!-- Modern Sleek Laptop -->
-  <!-- Laptop Screen Open -->
-  <path d="M320 230 L395 220 C402 219 408 224 409 231 L418 310 C419 317 414 323 407 324 L335 335 C328 336 322 331 321 324 L315 238 C314 233 316 231 320 230 Z" 
-        fill="#FFFFFF" stroke="#0F172A" stroke-width="3.5" stroke-linejoin="round" />
+  <!-- ================= THE IT AGENT (CHARACTER) ================= -->
+  <!-- Body / Torso (Royal Blue Sweater matching theme #2563EB) -->
+  <path d="M225 380 L225 310 C 225 260, 345 260, 345 310 L345 380 Z" fill="#2563eb" stroke="#0f172a" stroke-width="3.5" stroke-linejoin="round" />
   
-  <!-- Screen Content / Lines -->
-  <path d="M335 245 L390 238" stroke="#2563EB" stroke-width="3" stroke-linecap="round" />
-  <path d="M338 260 L385 254" stroke="#94A3B8" stroke-width="2.5" stroke-linecap="round" />
-  <path d="M341 275 L375 270" stroke="#94A3B8" stroke-width="2.5" stroke-linecap="round" />
-  <circle cx="395" cy="290" r="5" fill="#2563EB" />
+  <!-- Crisp White Collar -->
+  <path d="M265 262 L285 292 L275 292 Z" fill="#ffffff" stroke="#0f172a" stroke-width="3" stroke-linejoin="round" />
+  <path d="M305 262 L285 292 L295 292 Z" fill="#ffffff" stroke="#0f172a" stroke-width="3" stroke-linejoin="round" />
 
+  <!-- Neck -->
+  <rect x="274" y="244" width="22" height="22" fill="#ffffff" stroke="#0f172a" stroke-width="3" />
+
+  <!-- Head Base -->
+  <circle cx="285" cy="205" r="46" fill="#ffffff" stroke="#0f172a" stroke-width="3.5" />
+
+  <!-- Clean Cartoon Hair (Dark Slate #0F172A) -->
+  <path d="M242 205 C 242 155, 328 155, 328 205 C 328 175, 290 172, 242 205 Z" fill="#0f172a" stroke="#0f172a" stroke-width="3.5" stroke-linejoin="round" />
+  <!-- Hair bun / flow -->
+  <path d="M240 200 C 230 185, 235 165, 252 165 C 242 178, 242 195, 240 200 Z" fill="#0f172a" />
+
+  <!-- Friendly Face Features (High clarity, clean eyes & smile) -->
+  <!-- Eyes -->
+  <circle cx="272" cy="202" r="4" fill="#0f172a" />
+  <circle cx="298" cy="202" r="4" fill="#0f172a" />
+  <!-- Eye highlights -->
+  <circle cx="273.5" cy="200.5" r="1.5" fill="#ffffff" />
+  <circle cx="299.5" cy="200.5" r="1.5" fill="#ffffff" />
+  <!-- Gentle Eyebrows -->
+  <path d="M267 193 C 271 190, 276 191, 278 193" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+  <path d="M292 193 C 294 191, 299 190, 303 193" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+  <!-- Friendly Smile -->
+  <path d="M280 216 Q 285 224, 290 216" fill="none" stroke="#0f172a" stroke-width="2.5" stroke-linecap="round" />
+
+  <!-- Professional IT Support Headset -->
+  <!-- Headband -->
+  <path d="M241 195 C 241 150, 329 150, 329 195" fill="none" stroke="#2563eb" stroke-width="4.5" stroke-linecap="round" />
+  <!-- Earcups -->
+  <rect x="236" y="190" width="8" height="20" rx="4" fill="#0f172a" />
+  <rect x="326" y="190" width="8" height="20" rx="4" fill="#0f172a" />
+  <!-- Microphone Boom & Capsule -->
+  <path d="M240 204 C 240 224, 260 228, 274 226" fill="none" stroke="#0f172a" stroke-width="3" stroke-linecap="round" />
+  <circle cx="275" cy="226" r="3.5" fill="#2563eb" />
+
+  <!-- Arms Typing comfortably on Laptop -->
+  <path d="M232 320 C 235 345, 255 362, 275 362" fill="none" stroke="#0f172a" stroke-width="12" stroke-linecap="round" />
+  <path d="M338 320 C 335 345, 315 362, 295 362" fill="none" stroke="#0f172a" stroke-width="12" stroke-linecap="round" />
+  <circle cx="275" cy="362" r="6" fill="#ffffff" stroke="#0f172a" stroke-width="2.5" />
+  <circle cx="295" cy="362" r="6" fill="#ffffff" stroke="#0f172a" stroke-width="2.5" />
+
+  <!-- ================= ULTRA-SHARP LAPTOP WORKSTATION ================= -->
   <!-- Laptop Base -->
-  <path d="M285 335 L395 320 L425 340 L310 355 Z" 
-        fill="#E2E8F0" stroke="#0F172A" stroke-width="3" stroke-linejoin="round" />
+  <path d="M245 376 L325 376 L332 380 L238 380 Z" fill="#94a3b8" stroke="#0f172a" stroke-width="3" stroke-linejoin="round" />
+  <!-- Laptop Screen Lid -->
+  <rect x="250" y="324" width="70" height="50" rx="4" fill="#ffffff" stroke="#0f172a" stroke-width="3" />
+  <!-- Screen Glow / Display Content -->
+  <rect x="254" y="328" width="62" height="40" rx="2" fill="url(#screenGradient)" />
+  <!-- Mini Code/Ticket lines on Laptop Screen -->
+  <line x1="258" y1="335" x2="280" y2="335" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" />
+  <line x1="258" y1="341" x2="305" y2="341" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" />
+  <line x1="258" y1="347" x2="295" y2="347" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" />
+  <line x1="258" y1="353" x2="288" y2="353" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" />
+  <!-- Green active status dot on screen -->
+  <circle cx="308" cy="335" r="2.5" fill="#10b981" />
 
-  <!-- Decorative floating stars / sparkles -->
-  <path d="M120 180 L125 195 L140 200 L125 205 L120 220 L115 205 L100 200 L115 195 Z" fill="#2563EB" opacity="0.7" />
-  <path d="M380 70 L383 80 L393 83 L383 86 L380 96 L377 86 L367 83 L377 80 Z" fill="#2563EB" opacity="0.6" />
+  <!-- ================= FLOATING IT SERVICE DESK BADGES (CONCEPT 1) ================= -->
+
+  <!-- Top-Right: Helpdesk Speech / Active Conversation Bubble -->
+  <g filter="url(#cardShadow)">
+    <path d="M375 145 C 375 125, 470 125, 470 145 C 470 165, 420 165, 400 178 L402 165 C 380 165, 375 155, 375 145 Z" fill="#ffffff" stroke="#0f172a" stroke-width="3" stroke-linejoin="round" />
+    <circle cx="410" cy="145" r="3.5" fill="#2563eb" />
+    <circle cx="423" cy="145" r="3.5" fill="#2563eb" />
+    <circle cx="436" cy="145" r="3.5" fill="#2563eb" />
+  </g>
+
+  <!-- Left: Floating Ticket Resolved Badge (#INC-1028 SLA Met) -->
+  <g filter="url(#cardShadow)" transform="translate(60, 210)">
+    <rect x="0" y="0" width="145" height="58" rx="12" fill="#ffffff" stroke="#0f172a" stroke-width="3" />
+    <!-- Checkmark Circle Badge -->
+    <circle cx="26" cy="29" r="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2" />
+    <path d="M21 29 L25 33 L32 25" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+    <!-- Ticket Text Details -->
+    <text x="48" y="24" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" fill="#0f172a">INC-1028</text>
+    <rect x="100" y="14" width="36" height="13" rx="4" fill="#dcfce7" />
+    <text x="104" y="23" font-family="system-ui, -apple-system, sans-serif" font-size="8" font-weight="700" fill="#15803d">Resolved</text>
+    <text x="48" y="42" font-family="system-ui, -apple-system, sans-serif" font-size="9" font-weight="600" fill="#64748b">SLA met in 12m</text>
+  </g>
+
+  <!-- Right: Floating SLA Watchdog / Priority Timer Badge -->
+  <g filter="url(#cardShadow)" transform="translate(375, 230)">
+    <rect x="0" y="0" width="148" height="54" rx="12" fill="#ffffff" stroke="#0f172a" stroke-width="3" />
+    <!-- Clock / Timer Icon -->
+    <circle cx="26" cy="27" r="14" fill="#eff6ff" stroke="#2563eb" stroke-width="2" />
+    <path d="M26 19 L26 27 L31 29" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" />
+    <!-- SLA Info -->
+    <text x="48" y="23" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" fill="#0f172a">SLA Guarantee</text>
+    <rect x="48" y="31" width="88" height="12" rx="3" fill="#f1f5f9" />
+    <text x="52" y="40" font-family="system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="600" fill="#2563eb">99.8% Compliance</text>
+  </g>
+
 </svg>

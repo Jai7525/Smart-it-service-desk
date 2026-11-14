@@ -95,12 +95,12 @@ export const LoginPage: React.FC = () => {
           </div>
 
           {/* Handcrafted Editorial Cartoon Illustration */}
-          <div className="my-auto py-6 flex items-center justify-center">
-            <div className="w-full max-w-[380px] aspect-square flex items-center justify-center transform hover:scale-[1.02] transition-transform duration-300">
+          <div className="my-auto py-4 flex items-center justify-center">
+            <div className="w-full max-w-[460px] flex items-center justify-center transform hover:scale-[1.02] transition-transform duration-300">
               <img
                 src={loginIllustration}
                 alt="IT Support Service Desk"
-                className="w-full h-full object-contain"
+                className="w-full h-auto object-contain drop-shadow-sm select-none"
               />
             </div>
           </div>
