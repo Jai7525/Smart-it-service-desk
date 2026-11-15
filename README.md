@@ -1,344 +1,470 @@
-# Smart IT Service Desk & Workflow Automation Platform
+# SmartTicket – Smart IT Service Desk & Workflow Automation Platform
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/React-19-61DAFB.svg?style=flat&logo=react&logoColor=black)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6.svg?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-8.3-646CFF.svg?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.1-38B2AC.svg?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL%20%26%20Auth-3ECF8E.svg?style=flat&logo=supabase&logoColor=white)](https://supabase.com/)
-[![Google Gemini](https://img.shields.io/badge/Google_Gemini-3.5_Flash-8E75B2.svg?style=flat&logo=google&logoColor=white)](https://aistudio.google.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E.svg?style=flat&logo=supabase&logoColor=white)](https://supabase.com/)
+[![Google Gemini](https://img.shields.io/badge/Google_Gemini-API-8E75B2.svg?style=flat&logo=google&logoColor=white)](https://aistudio.google.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-An enterprise-grade, ITIL-aligned **Smart IT Service Desk & Workflow Automation Platform** designed for modern organizations. Built with **FastAPI**, **SQLModel**, **Supabase PostgreSQL**, **React (TypeScript)**, and powered by **Google Gemini** for intelligent troubleshooting, automated incident classification, least-loaded agent dispatch, and ITIL Change & Service Request lifecycle governance.
+A full-stack IT Service Management (ITSM) and Workflow Automation platform designed to streamline incident triage, service requests, change approvals, problem management (RCA), and IT support operations through role-based access control (RBAC) and Google Gemini AI assistance.
 
 ---
 
-## Table of Contents
+### 🌐 Live Deployments & Repository
 
-- [Problem Statement](#problem-statement)
-- [Key Features](#key-features)
-- [User Roles & Permissions](#user-roles--permissions)
-- [System Architecture](#system-architecture)
-- [Technology Stack](#technology-stack)
-- [Project Folder Structure](#project-folder-structure)
-- [Installation & Setup](#installation--setup)
-  - [Prerequisites](#prerequisites)
-  - [1. Backend Setup](#1-backend-setup)
-  - [2. Frontend Setup](#2-frontend-setup)
-- [Environment Variables](#environment-variables)
-- [API Documentation (Swagger/OpenAPI)](#api-documentation-swaggeropenapi)
-- [Automated Test Suite](#automated-test-suite)
-- [Screenshots & UI Walkthrough](#screenshots--ui-walkthrough)
-- [Future Enhancements](#future-enhancements)
-- [License](#license)
-
----
-
-## Problem Statement
-
-Traditional IT help desks suffer from slow resolution cycles, manual ticket routing bottlenecks, lack of employee resolution verification, and disconnected change management governance. 
-
-**Smart IT Service Desk** solves these challenges by providing:
-1. **Automated Incident Classification & Dispatch:** ML/Heuristic categorization with least-loaded agent routing across specialized category desks.
-2. **Employee Resolution Confirmation:** Tickets cannot transition to `Closed` until the requesting employee confirms the issue is truly resolved.
-3. **Enterprise Service Request Catalogue:** Multi-category catalogue with dynamic specification forms and multi-tier manager authorizations.
-4. **IT Change Management (CAB):** Multi-dimensional risk score calculator, CAB review actions, and an interactive 30-day change calendar.
-5. **Grounded AI Support Assistant:** Integrated with Google Gemini to offer step-by-step IT self-service troubleshooting and one-click incident drafting.
-
----
-
-## Key Features
-
-### 1. Incident Lifecycle & Mandatory Resolution Confirmation
-- **Automated Routing:** Calculates Priority Matrix ($Impact \times Urgency$), generates unique human-readable ticket numbers (`INC-1001`), and assigns to the least-loaded agent on the appropriate category desk (Network, Hardware, Software, Access, General).
-- **Active SLA Monitoring:** Background watchdog monitors response and resolution target windows with automated manager warning escalations.
-- **Two-Phase Closure Guard:** When an agent marks an issue as `Resolved`, the ticket remains pending employee sign-off. Only explicit Employee Confirmation closes the ticket; a rejection immediately reopens the ticket to `In Progress`.
-
-### 2. Service Requests & Approval Management
-- **Enterprise Service Catalogue:** Standardized categories (Software Installation, Hardware Allocation, Corporate VPN Access, Cloud Permissions, Employee Onboarding).
-- **Dynamic Specification Forms:** Field validation with custom justification fields.
-- **Manager Approval Centre:** Pending authorization inbox with one-click **Approve**, **Reject** (with mandatory reason), or **Request More Information**.
-- **Fulfillment & Claim Actions:** Agents can claim approved requests, log fulfillment notes, and transition through the 4-step lifecycle stepper.
-
-### 3. IT Change Management & CAB Calendar
-- **Automated Risk Engine:** Multi-factor scoring ($Impact + Complexity + Downtime + Security + Rollback$) generating `Low`, `Medium`, `High`, or `Critical` risk ratings.
-- **CAB Review Portal:** Change Advisory Board controls for Managers/Admins with authorization and rejection tracking.
-- **Interactive Change Calendar:** 30-day timeline visualization of scheduled implementation windows to detect maintenance collisions.
-- **Execution & Rollback Controls:** Real-time logging of execution notes, testing validation, and fallback rollbacks.
-
-### 4. Generative AI Support Assistant (Google Gemini)
-- Grounded on approved internal **Knowledge Base** records.
-- Clean text formatting free of raw markdown clutter.
-- **Structured Incident Drafting:** Detects reported issues in conversation and prepares one-click ticket drafts with auto-populated subjects and categories.
-
----
-
-## User Roles & Permissions
-
-The platform enforces strict Role-Based Access Control (RBAC) across 4 roles:
-
-| Role | Access & Capabilities |
+| Service | URL |
 | :--- | :--- |
-| **Employee** | Report incidents, confirm/reject resolutions, browse Service Catalogue, submit service requests, track request steppers, chat with AI Assistant. |
-| **IT Support Agent** | Agent Workspace, investigate assigned incidents, update work notes, resolve incidents, claim/fulfill approved service requests, submit and execute RFC changes. |
-| **IT Manager** | Executive KPI dashboards, manual ticket reassignment, Manager Approval Centre (Service Requests), CAB review & change authorization, RCA problem management, automation audit logs. |
-| **System Administrator** | User directory provision/RBAC, support team configuration, corporate department directory, SLA policy engine thresholds, system-wide automation governance. |
+| **🌐 Live Frontend Application** | [https://smart-itsm-workflow-platform.vercel.app](https://smart-itsm-workflow-platform.vercel.app) |
+| **⚙️ Backend API Engine** | [https://smart-it-service-desk-1qwo.onrender.com](https://smart-it-service-desk-1qwo.onrender.com) |
+| **📖 Swagger Interactive API Docs** | [https://smart-it-service-desk-1qwo.onrender.com/docs](https://smart-it-service-desk-1qwo.onrender.com/docs) |
+| **💻 GitHub Source Repository** | [https://github.com/Jai7525/Smart-it-service-desk](https://github.com/Jai7525/Smart-it-service-desk) |
 
 ---
 
-## System Architecture
+## 📑 Table of Contents
+
+1. [Project Overview](#-project-overview)
+2. [Problem Statement](#-problem-statement)
+3. [Key Features](#-key-features)
+4. [User Roles & Permissions (RBAC)](#-user-roles--permissions-rbac)
+5. [System Architecture](#-system-architecture)
+6. [Technology Stack](#-technology-stack)
+7. [Project Directory Structure](#-project-directory-structure)
+8. [Installation & Setup](#-installation--setup)
+9. [Environment Variables](#-environment-variables)
+10. [API Endpoints & Documentation](#-api-endpoints--documentation)
+11. [Database Design & Schema](#-database-design--schema)
+12. [Automated Test Suite](#-automated-test-suite)
+13. [Screenshots & UI Walkthrough](#-screenshots--ui-walkthrough)
+14. [Future Enhancements](#-future-enhancements)
+15. [License](#-license)
+
+---
+
+## 📌 Project Overview
+
+**SmartTicket** is a production-ready, role-based IT Service Desk platform that unifies IT support operations into a single coordinated environment.
+
+The platform tracks the complete ticket lifecycle—from employee issue submission to automated category classification, deterministic priority scoring, least-loaded agent assignment, investigation notes, resolution confirmation, and manager governance.
+
+It also integrates the **Google Gemini API** to assist employees with 24/7 intelligent self-service troubleshooting and one-click incident ticket drafting.
+
+---
+
+## 🎯 Problem Statement
+
+Traditional IT service desks rely on manual email threads, disconnected spreadsheets, and arbitrary ticket assignment. These friction points lead to:
+
+- **Delayed incident resolution** due to manual triage and missing priority standards.
+- **Lost ownership & ticket bottlenecks**, where overloaded agents hold open tickets while others remain idle.
+- **Premature ticket closures**, leaving employees frustrated by recurring or unresolved problems.
+- **Zero visibility into SLAs**, causing compliance breaches without advance warnings.
+- **Opaque change management**, risking system outages due to unreviewed infrastructure changes.
+- **Untracked technical debt**, treating recurring outages as isolated incidents rather than investigating root causes (RCA).
+
+**SmartTicket** eliminates these challenges with automated triage pipelines, guaranteed SLA countdown timers, mandatory two-way employee resolution confirmations, CAB change governance, and automated problem clustering.
+
+---
+
+## 🚀 Key Features
+
+### 1. Incident Management & Automated Triage Pipeline
+- **Sequential Concurrency-Safe ID Generation**: Automatic generation of IDs (`INC-1001`, `INC-1002`).
+- **Automated Keyword-Based Classification**: Categorizes incidents into `Network`, `Hardware`, `Software`, `Access`, or `General`.
+- **Deterministic 3×3 Priority Matrix**: Calculates Priority (`Critical`, `High`, `Medium`, `Low`) by mapping Impact vs. Urgency.
+- **Intelligent Workload-Balanced Auto-Dispatch**: Automatically assigns tickets to the active support agent with the lowest open ticket count in the category team.
+- **Real-Time SLA Watchdog**: Computes exact response and resolution deadlines; triggers warnings at 75% elapsed time.
+- **Two-Way Resolution Confirmation Workflow**: When an agent resolves a ticket, it enters `resolved` status. The ticket only transitions to `closed` after the employee confirms resolution. If rejected, it returns to `reopened` with mandatory feedback.
+
+### 2. Service Request Management & Dynamic Catalogue
+- **Tiered Service Catalogue**: Browse hardware, software licenses, access permissions, and cloud infrastructure requests.
+- **Custom Form Specifications**: Collects business justification, required delivery date, and item-specific details.
+- **Two-Tier Approval Workflow**: Automatically places requests in `pending_approval` until an authorized Manager approves or rejects.
+- **Agent Fulfillment Lifecycle**: Support agents claim approved requests, log fulfillment notes, and transition to `fulfilled`.
+
+### 3. ITIL Change Management & Advisory Board (CAB)
+- **Change Risk Scoring**: Calculates change risk levels (`Low`, `Medium`, `High`, `Critical`) based on scope and outage impact.
+- **CAB Review Actions**: Managers can approve, reject, or request information on changes.
+- **Interactive 30-Day Change Calendar**: Prevents release collisions with scheduling views for standard, emergency, and normal changes.
+
+### 4. Problem Management & Incident Correlation (RCA)
+- **Automated Outage Clustering**: Detects when 3 or more incidents in the same category occur within a rolling 30-minute window and alerts managers.
+- **Root Cause Analysis (RCA)**: Create Problem records (`PRB-xxx`), document workarounds, attach affected incident tickets, and track permanent fixes.
+
+### 5. Grounded AI Support Assistant (Google Gemini)
+- **Natural Language Troubleshooting**: Employees can ask IT questions 24/7 (e.g., *"VPN drops every 5 minutes on Wi-Fi"*).
+- **Knowledge-Grounded Retrieval**: Contextualizes suggestions using internal verified technical articles.
+- **One-Click Incident Drafting**: If self-troubleshooting fails, the assistant pre-fills an incident ticket directly from the conversation.
+
+### 6. Role-Specific Dashboards & Operational Cockpits
+- Custom workspaces designed specifically for Employees, Agents, Managers, and System Administrators.
+
+---
+
+## 👥 User Roles & Permissions (RBAC)
+
+SmartTicket enforces strict Role-Based Access Control (RBAC) across both backend REST endpoints and frontend navigation:
+
+| Role | Default Demo Account | Permissions & Operational Scope |
+| :--- | :--- | :--- |
+| **Employee** | `employee.john@smartticket.local` | • Submit incidents & service requests<br>• Track personal ticket progress<br>• Confirm or reject ticket resolutions<br>• Access Knowledge Base & AI Assistant |
+| **IT Agent** | `agent.network@smartticket.local` | • Operational Workspace cockpit & SLA urgent watchlist<br>• Dedicated triage queue (`My Queue`, `Awaiting Confirmation`, `Reopened`)<br>• Add investigation notes & transition ticket status to `in_progress` / `resolved`<br>• Claim and fulfill approved service requests |
+| **IT Manager** | `manager@smartticket.local` | • Executive SLA metrics & department health analytics<br>• Manual ticket reassignment & triage override<br>• Service Request & CAB Change Approval Centre<br>• Problem Management (RCA) & Incident Correlation alerts |
+| **System Admin** | `admin@smartticket.local` | • Corporate User Directory & RBAC role provisioning<br>• Category Support Team dispatch configuration<br>• Dynamic SLA policy deadline adjustments<br>• System health monitoring & department governance |
+
+---
+
+## 🏗️ System Architecture
+
+SmartTicket uses a modular, cloud-native decoupled architecture:
 
 ```
-                                  +-----------------------------+
-                                  |     React 19 + Vite + TS    |
-                                  |     (Tailwind CSS UI)       |
-                                  +--------------+--------------+
-                                                 |
-                                     HTTP REST / JSON / JWT
-                                                 |
-                                  +--------------v--------------+
-                                  |      FastAPI Backend        |
-                                  |      (Python 3.12+)         |
-                                  +-------+--------------+------+
-                                          |              |
-                      +-------------------+              +--------------------+
-                      |                                                       |
-        +-------------v-------------+                           +-------------v-------------+
-        |   Supabase PostgreSQL     |                           |    Google Gemini API      |
-        |  (SQLModel ORM / Auth)    |                           |     (gemini-3.5-flash)    |
-        +---------------------------+                           +---------------------------+
+                      ┌────────────────────────────────────────┐
+                      │          React 19 Frontend             │
+                      │   Tailwind CSS 4 • Lucide • Vite 8     │
+                      │  (Hosted on Vercel Edge Global CDN)    │
+                      └──────────────────┬─────────────────────┘
+                                         │
+                                HTTPS / REST API
+                                         │
+                      ┌──────────────────▼─────────────────────┐
+                      │          FastAPI Backend Engine        │
+                      │   Python 3.13 • Pydantic v2 • Uvicorn  │
+                      │ (Hosted on Render Cloud Web Services)  │
+                      └──────────────┬──────────────────┬──────┘
+                                     │                  │
+                SQLAlchemy / psycopg │                  │ Google Gemini API
+                                     │                  │
+                      ┌──────────────▼─────┐      ┌─────▼──────────────┐
+                      │ Supabase Postgres  │      │ Google Gemini 2.5  │
+                      │ Connection Pooler  │      │ AI Assistant Engine│
+                      │ (Tokyo ap-ne-1)    │      └────────────────────┘
+                      └────────────────────┘
 ```
 
 ---
 
-## Technology Stack
+## 🛠️ Technology Stack
 
-- **Frontend:** React 19, TypeScript, Vite, Tailwind CSS v4, Lucide Icons, Recharts.
-- **Backend:** Python 3.12+, FastAPI, SQLModel, SQLAlchemy, Pydantic v2, HTTPX.
-- **Database & Auth:** Supabase PostgreSQL with Session/Transaction pooling, Supabase Auth.
-- **Artificial Intelligence:** Google Gemini REST API (`gemini-3.5-flash`).
-- **Testing:** Pytest, pytest-asyncio, FastAPI TestClient.
+| Layer | Technologies | Purpose |
+| :--- | :--- | :--- |
+| **Frontend UI** | **React 19**, **TypeScript 5.9**, **Vite 8.3** | High-performance single-page web application |
+| **Styling** | **Tailwind CSS 4.1**, **Lucide React** | Modern design with accessible contrast and zero CLS |
+| **Backend API** | **Python 3.13**, **FastAPI 0.115**, **Uvicorn** | High-concurrency async REST API engine |
+| **ORM & Models** | **SQLModel 0.0.22**, **SQLAlchemy 2.0**, **Pydantic v2** | Type-safe database queries and schema validation |
+| **Database** | **Supabase PostgreSQL** (`ap-northeast-1`) | Cloud-hosted relational persistence and session pooling |
+| **AI Integration** | **Google Gemini API** (`google-genai` SDK) | Grounded AI ticket drafting & IT self-service |
+| **Testing** | **Pytest 9.2**, **pytest-asyncio**, **HTTPX** | Automated unit, regression, and end-to-end integration test suite |
+| **Hosting & CI/CD** | **Vercel** (Frontend) & **Render** (Backend) | Automatic continuous deployment on push to `main` |
 
 ---
 
-## Project Folder Structure
+## 📁 Project Directory Structure
 
-```
+```text
 Smart_Ticket/
-├── .env.example                 # Template for database & AI credentials
-├── .gitignore                   # Excludes secrets, node_modules, .venv, build artifacts
-├── pyproject.toml               # Python project configuration & dependencies
-├── README.md                    # Project documentation
-│
-├── src/smart_ticket/            # Backend Application Source
-│   ├── main.py                  # FastAPI application entry & CORS middleware
-│   ├── models.py                # SQLModel database models & relationships
-│   ├── schemas.py               # Pydantic schemas for serialization
-│   ├── core/                    # Core configuration, database engine, security
-│   │   ├── config.py
-│   │   ├── database.py
-│   │   └── security.py          # RBAC decorators & JWT handling
-│   ├── api/v1/                  # REST API Endpoints
-│   │   ├── admin.py             # User provisioning, teams, SLA policies
-│   │   ├── ai.py                # Gemini Assistant with response cleaning
-│   │   ├── analytics.py         # Executive KPI aggregations
-│   │   ├── auth.py              # Identity & session inspection
-│   │   ├── automation.py        # Automation rule triggers & logs
-│   │   ├── changes.py           # Change Management & CAB Calendar
-│   │   ├── incidents.py         # Incident lifecycle & confirmation endpoints
-│   │   ├── knowledge.py         # Knowledge base articles
-│   │   ├── notifications.py     # In-app notifications
-│   │   ├── problems.py          # Problem records (RCA)
-│   │   └── service_requests.py  # Service Catalogue & fulfillment
-│   └── services/                # Business Logic Engines
-│       ├── assignment.py        # Least-loaded agent dispatch
-│       ├── classification.py    # Auto-categorization engine
-│       ├── priority.py          # Dynamic priority matrix
-│       └── sla.py               # SLA target window calculator
-│
-├── frontend/                    # Frontend React Application
+├── frontend/                         # React 19 + TypeScript SPA
+│   ├── public/
+│   │   ├── favicon.svg               # SmartTicket SVG monogram favicon
+│   │   ├── robots.txt                # Search crawler directive
+│   │   ├── llms.txt                  # LLM agent discoverability manifest
+│   │   └── .well-known/ard.json      # Agentic Resource Discovery (ARD) manifest
+│   ├── src/
+│   │   ├── assets/                   # Vector illustrations & static media
+│   │   ├── components/               # AppSidebar, TopNavbar, StatCard, Badges
+│   │   ├── context/                  # AuthContext (Supabase / RBAC state)
+│   │   ├── pages/                    # 12 role-specific views
+│   │   │   ├── LoginPage.tsx         # Modern two-column login with quick demo access
+│   │   │   ├── EmployeeDashboard.tsx # Employee ticket & resolution confirmation
+│   │   │   ├── AgentWorkspacePage.tsx# Agent operational cockpit & SLA watchlist
+│   │   │   ├── AgentDashboard.tsx    # Agent ticket investigation workbench
+│   │   │   ├── ManagerDashboard.tsx  # Executive overview, RCA, and correlations
+│   │   │   ├── AdminDashboard.tsx    # User directory, teams, SLA policies
+│   │   │   ├── ServiceCatalogPage.tsx# Service request catalogue
+│   │   │   ├── MyTicketsPage.tsx     # Comprehensive incident ticket list
+│   │   │   ├── ChangeManagementPage.tsx # ITIL change records & CAB approvals
+│   │   │   ├── ChangeCalendarPage.tsx# Interactive 30-day change schedule
+│   │   │   ├── KnowledgeBasePage.tsx # Technical self-service articles
+│   │   │   └── AIAssistantPage.tsx   # Gemini-powered IT conversational bot
+│   │   ├── services/api.ts           # Centralized API fetch wrapper
+│   │   ├── types/index.ts            # Enterprise TypeScript interfaces
+│   │   └── App.tsx                   # Role-gated routing configuration
+│   ├── index.html                    # HTML5 entry with preconnect optimizations
 │   ├── package.json
-│   ├── vite.config.ts
-│   └── src/
-│       ├── App.tsx              # Role-aware router & layout
-│       ├── components/          # TopNavbar, AppSidebar, StatCard, Badges
-│       ├── context/             # AuthContext with mock switcher & JWT
-│       ├── pages/               # Role-specific portal views & management pages
-│       ├── services/api.ts      # Standardized Fetch client wrapper
-│       └── types/               # TypeScript interfaces & enums
+│   └── vite.config.ts
 │
-└── tests/                       # Test Suite
-    ├── test_advanced_modules.py # End-to-end Service Requests, Changes & AI tests
-    ├── test_api.py              # Core API tests
-    ├── test_assignment_rules.py # Workload dispatch engine tests
-    ├── test_engines.py          # Priority, SLA & Classification tests
-    └── test_resolution_confirmation.py # Employee resolution confirmation tests
+├── src/smart_ticket/                 # FastAPI backend application package
+│   ├── api/v1/                       # Versioned REST API routers
+│   │   ├── admin.py                  # User management, teams, SLA configuration
+│   │   ├── auth.py                   # Authentication & profile endpoints
+│   │   ├── incidents.py              # Incident creation, lifecycle, resolution
+│   │   ├── service_requests.py       # Catalog items & service request approvals
+│   │   ├── changes.py                # ITIL change control & CAB workflows
+│   │   ├── problems.py               # Root Cause Analysis (RCA) problem records
+│   │   ├── knowledge.py              # Knowledge base retrieval & voting
+│   │   ├── ai.py                     # Google Gemini AI assistant endpoint
+│   │   └── analytics.py              # SLA compliance & executive metrics
+│   ├── core/
+│   │   ├── config.py                 # Pydantic Settings & environment validation
+│   │   ├── database.py               # Supabase session generator with connection pooler
+│   │   └── security.py               # Role-based access control dependencies
+│   ├── models.py                     # Relational SQLModel tables & schema definitions
+│   ├── schemas.py                    # Pydantic request/response transfer schemas
+│   ├── services/                     # Business logic and triage engines
+│   │   ├── assignment.py             # Workload-balanced least-loaded agent dispatch
+│   │   ├── classification.py         # Keyword categorization engine
+│   │   ├── priority.py               # 3x3 Impact/Urgency calculation engine
+│   │   ├── similarity.py             # Incident clustering & major incident detection
+│   │   └── sla.py                    # SLA deadline calculation & watchdog
+│   └── main.py                       # FastAPI application entrypoint & CORS middleware
+│
+├── tests/                            # Automated Pytest suite
+│   ├── test_advanced_modules.py      # Service requests, change control, AI tests
+│   ├── test_api.py                   # API router integration tests
+│   ├── test_assignment_rules.py      # Least-loaded agent assignment tests
+│   ├── test_engines.py               # Priority, classification, SLA engine unit tests
+│   └── test_resolution_confirmation.py# Confirmation & reject/reopen tests
+│
+├── pyproject.toml                    # Poetry dependency specification
+├── render.yaml                       # Render cloud deployment manifest
+└── README.md
 ```
 
 ---
 
-## Installation & Setup
+## ⚙️ Installation & Setup
 
 ### Prerequisites
-
-- **Python:** 3.12 or newer
-- **Node.js:** 18.0 or newer
-- **Package Managers:** `pip` (or `uv`) and `npm`
-- **Supabase Account:** Free PostgreSQL database project
-- **Google AI Studio Account:** Gemini API Key
-
----
-
-### 1. Backend Setup
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/Jai7525/Smart-it-service-desk.git
-   cd Smart-it-service-desk
-   ```
-
-2. **Create and activate a virtual environment:**
-   ```bash
-   # Windows (PowerShell)
-   python -m venv .venv
-   .\.venv\Scripts\Activate.ps1
-
-   # Linux / macOS
-   python3 -m venv .venv
-   source .venv/bin/activate
-   ```
-
-3. **Install dependencies:**
-   ```bash
-   pip install -e .
-   ```
-
-4. **Configure Environment Variables:**
-   Copy the example configuration file:
-   ```bash
-   cp .env.example .env
-   ```
-   Open `.env` and fill in your Supabase connection string and Gemini API Key (see [Environment Variables](#environment-variables)).
-
-5. **Start the FastAPI backend server:**
-   ```bash
-   uvicorn smart_ticket.main:app --host 0.0.0.0 --port 8080 --reload
-   ```
-   *The backend will be live at `http://127.0.0.1:8080`.*
+- **Python 3.11+** (Python 3.13 recommended)
+- **Node.js 18+** and **npm**
+- **Git**
+- A **Supabase** project (PostgreSQL database)
+- A **Google Gemini API Key** (optional, for AI features)
 
 ---
 
-### 2. Frontend Setup
-
-1. **Navigate to the frontend directory:**
-   ```bash
-   cd frontend
-   ```
-
-2. **Install frontend dependencies:**
-   ```bash
-   npm install
-   ```
-
-3. **Start the Vite development server:**
-   ```bash
-   npm run dev
-   ```
-   *The frontend application will be live at `http://localhost:3000` (or `http://localhost:5173`).*
-
----
-
-## Environment Variables
-
-Configure the following keys in your `.env` file:
-
-```env
-# Application
-PROJECT_NAME="Smart IT Service Desk & Workflow Automation Platform"
-ENVIRONMENT="development"
-
-# Supabase PostgreSQL Database URL
-# Format: postgresql://postgres:[PASSWORD]@db.[PROJECT-REF].supabase.co:5432/postgres
-DATABASE_URL="postgresql://postgres:your-db-password@db.your-project.supabase.co:5432/postgres"
-
-# Supabase API & Auth
-SUPABASE_URL="https://your-project.supabase.co"
-SUPABASE_KEY="your-supabase-anon-or-service-role-key"
-SUPABASE_JWT_SECRET="your-supabase-jwt-secret"
-
-# SLA Windows (Hours)
-SLA_CRITICAL_RESPONSE_HOURS=0.5
-SLA_CRITICAL_RESOLUTION_HOURS=2.0
-SLA_HIGH_RESPONSE_HOURS=1.0
-SLA_HIGH_RESOLUTION_HOURS=4.0
-SLA_MEDIUM_RESPONSE_HOURS=4.0
-SLA_MEDIUM_RESOLUTION_HOURS=24.0
-SLA_LOW_RESPONSE_HOURS=8.0
-SLA_LOW_RESOLUTION_HOURS=48.0
-
-# Google Gemini Generative AI
-GEMINI_API_KEY="your-google-gemini-api-key"
-GEMINI_MODEL="gemini-3.5-flash"
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Jai7525/Smart-it-service-desk.git
+cd Smart-it-service-desk
 ```
 
-> **Security Note:** `.env` is explicitly added to `.gitignore`. Never commit API keys or passwords to version control.
+---
+
+### 2. Backend Setup
+Create and activate a Python virtual environment:
+
+**Windows (PowerShell):**
+```powershell
+python -m venv .venv
+.\.venv\Scripts\activate
+```
+
+**macOS / Linux:**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Install backend dependencies:
+```bash
+pip install -e .
+```
+
+Run database migrations and start the development server:
+```bash
+uvicorn smart_ticket.main:app --reload --port 8080
+```
+The backend API will be available at: **`http://127.0.0.1:8080`**  
+Interactive API Docs (Swagger): **`http://127.0.0.1:8080/docs`**
 
 ---
 
-## API Documentation (Swagger/OpenAPI)
-
-Once the backend is running, interactively explore and test all endpoints:
-
-- **Swagger UI:** [http://127.0.0.1:8080/docs](http://127.0.0.1:8080/docs)
-- **ReDoc:** [http://127.0.0.1:8080/redoc](http://127.0.0.1:8080/redoc)
-- **OpenAPI Schema:** [http://127.0.0.1:8080/openapi.json](http://127.0.0.1:8080/openapi.json)
+### 3. Frontend Setup
+In a new terminal, navigate to the `frontend` directory:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+The React development server will start at: **`http://localhost:3000`**
 
 ---
 
-## Automated Test Suite
+## 🔐 Environment Variables
 
-The project includes unit, regression, and integration tests covering all critical engines and endpoints.
+Create a `.env` file in the project root directory:
 
-Run the test suite using `pytest`:
+```env
+# Database Connection (Supabase PostgreSQL)
+DATABASE_URL=postgresql://postgres.<project_ref>:<password>@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres
+
+# Supabase Auth Integration
+SUPABASE_URL=https://<project_ref>.supabase.co
+SUPABASE_KEY=your_supabase_anon_or_service_key
+SUPABASE_JWT_SECRET=your_supabase_jwt_secret
+
+# Google Gemini AI Integration
+GEMINI_API_KEY=your_gemini_api_key
+
+# Application Settings
+ENVIRONMENT=development
+MAX_ACTIVE_TICKETS_PER_AGENT=5
+```
+
+For the frontend, specify the backend URL (optional in local development due to Vite's proxy):
+```env
+VITE_API_URL=https://smart-it-service-desk-1qwo.onrender.com
+```
+
+---
+
+## 📡 API Endpoints & Documentation
+
+SmartTicket provides complete interactive OpenAPI documentation out of the box:
+
+- **Swagger UI**: [`/docs`](https://smart-it-service-desk-1qwo.onrender.com/docs)
+- **ReDoc**: [`/redoc`](https://smart-it-service-desk-1qwo.onrender.com/redoc)
+- **Raw OpenAPI Schema**: [`/openapi.json`](https://smart-it-service-desk-1qwo.onrender.com/openapi.json)
+
+### Primary API Routes:
+| Method | Endpoint | Description | Role Required |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/auth/login` | Email-based login with dynamic profile return | Public |
+| `GET` | `/api/incidents/` | List incidents (filtered by role isolation) | Authenticated |
+| `POST` | `/api/incidents/` | Create incident and run automated triage | Employee / Agent |
+| `PATCH` | `/api/incidents/{id}/status` | Update incident status (`in_progress`, `resolved`) | Agent / Manager |
+| `PATCH` | `/api/incidents/{id}/confirm-resolution` | Confirm ticket resolution (transitions to `closed`) | Employee (Reporter) |
+| `PATCH` | `/api/incidents/{id}/reject-resolution` | Reject resolution (transitions back to `reopened`) | Employee (Reporter) |
+| `GET` | `/api/service-catalog/` | List available service items | Authenticated |
+| `POST` | `/api/service-requests/` | Submit a new service request | Employee |
+| `POST` | `/api/service-requests/{id}/approve` | Approve service request | Manager / Admin |
+| `GET` | `/api/changes/` | List ITIL change management records | Agent / Manager |
+| `POST` | `/api/changes/` | Create change request with auto-risk score | Agent / Manager |
+| `POST` | `/api/ai/chat` | Grounded AI IT support assistant query | Authenticated |
+| `GET` | `/api/admin/users` | List corporate users with department names | Admin |
+| `POST` | `/api/admin/users` | Provision new user with assigned role | Admin |
+| `GET` | `/api/admin/teams` | List teams with live agent counts & workloads | Admin / Manager |
+| `PUT` | `/api/admin/sla-policies` | Update SLA response and resolution targets | Admin |
+
+---
+
+## 🗄️ Database Design & Schema
+
+SmartTicket uses normalized PostgreSQL tables managed via **SQLModel**:
+
+```text
+┌─────────────────┐       ┌─────────────────┐       ┌─────────────────┐
+│   departments   │◄──────┤    profiles     ├──────►│   team_members  │
+├─────────────────┤       ├─────────────────┤       ├─────────────────┤
+│ id (PK)         │       │ id (PK)         │       │ team_id (FK)    │
+│ name            │       │ email (Unique)  │       │ agent_id (FK)   │
+│ description     │       │ full_name       │       └────────┬────────┘
+└─────────────────┘       │ role (Enum)     │                │
+                          │ department_id   │                ▼
+                          │ is_active       │       ┌─────────────────┐
+                          │ is_available    │       │  support_teams  │
+                          └────────┬────────┘       ├─────────────────┤
+                                   │                │ id (PK)         │
+                                   │                │ name            │
+                                   ▼                │ category (Enum) │
+                          ┌─────────────────┐       └─────────────────┘
+                          │    incidents    │
+                          ├─────────────────┤
+                          │ id (PK)         │
+                          │ ticket_number   │
+                          │ subject         │
+                          │ category (Enum) │
+                          │ priority (Enum) │
+                          │ status (Enum)   │
+                          │ reporter_id (FK)│
+                          │ assigned_team_id│
+                          │ assigned_agent  │
+                          │ response_deadln │
+                          │ resolutn_deadln │
+                          └─────────────────┘
+```
+
+- **`profiles`**: Stores corporate identity, email, assigned role (`employee`, `agent`, `manager`, `admin`), availability status, and department link.
+- **`incidents`**: Central ticket table with priority ratings, status enum, SLA deadlines, and resolution tracking.
+- **`support_teams` & `team_members`**: Organizes agents into category teams (`Network`, `Hardware`, `Software`, `Access`, `General`).
+- **`service_requests` & `catalog_items`**: Manages the procurement catalog, item pricing, and manager approval states.
+- **`change_requests`**: Stores ITIL RFC records, CAB decisions, rollback plans, and risk ratings.
+- **`problem_records`**: Tracks root cause analysis (RCA), recurring incident links, and workarounds.
+- **`sla_policies`**: Configures response and resolution targets in hours per priority tier.
+
+---
+
+## 🧪 Automated Test Suite
+
+SmartTicket includes a comprehensive Pytest automated test suite covering unit tests, assignment rules, negative boundary tests, and end-to-end integration workflows.
+
+To run the test suite:
 ```bash
 pytest -v
 ```
 
-All 16 test suites validate:
-- ✅ `test_service_request_lifecycle` (Submission, Approval, Agent Claim & Fulfillment)
-- ✅ `test_change_management_lifecycle` (Risk Matrix, CAB Authorization, Execution)
-- ✅ `test_ai_support_assistant` (Gemini grounding and draft generation)
-- ✅ `test_full_resolution_confirmation_lifecycle` (Mandatory employee resolution check)
-- ✅ `test_only_agents_assigned_for_all_categories` (RBAC dispatch integrity)
-- ✅ `test_lowest_active_workload_selected` (Least-loaded routing verification)
-- ✅ `test_classification_engine`, `test_priority_matrix`, `test_sla_calculation`
+### Verified Test Results:
+```text
+tests/test_advanced_modules.py::test_service_request_lifecycle PASSED            [  6%]
+tests/test_advanced_modules.py::test_change_management_lifecycle PASSED          [ 12%]
+tests/test_advanced_modules.py::test_ai_support_assistant PASSED                 [ 18%]
+tests/test_api.py::test_root_endpoint PASSED                                     [ 25%]
+tests/test_api.py::test_create_incident_end_to_end PASSED                         [ 31%]
+tests/test_api.py::test_problem_management PASSED                                [ 37%]
+tests/test_assignment_rules.py::test_only_agents_assigned_for_all_categories PASSED [ 43%]
+tests/test_assignment_rules.py::test_lowest_active_workload_selected PASSED       [ 50%]
+tests/test_assignment_rules.py::test_api_reassign_rejects_manager_and_employee PASSED [ 56%]
+tests/test_assignment_rules.py::test_workload_capacity_and_unassigned_trigger PASSED [ 62%]
+tests/test_engines.py::test_classification_engine PASSED                         [ 68%]
+tests/test_engines.py::test_priority_matrix PASSED                               [ 75%]
+tests/test_engines.py::test_sla_calculation PASSED                               [ 81%]
+tests/test_resolution_confirmation.py::test_full_resolution_confirmation_lifecycle PASSED [ 87%]
+tests/test_resolution_confirmation.py::test_rejection_and_reopen_workflow PASSED  [ 93%]
+tests/test_resolution_confirmation.py::test_invalid_lifecycle_transition_guards PASSED [100%]
+
+============================== 16 passed in 1.48s ==============================
+```
 
 ---
 
-## Screenshots & UI Walkthrough
+## 📸 Screenshots & UI Walkthrough
 
-*(Add your screenshots to an `assets/` or `docs/images/` folder and link them here)*
+### 1. Modern Sign-In Portal with Quick Demo Personas
+![SmartTicket Login Portal](https://raw.githubusercontent.com/Jai7525/Smart-it-service-desk/main/frontend/src/assets/login-illustration.svg)
+*Featuring responsive 2-column layout, vector helpdesk illustration, and one-click demo login buttons for all 4 roles.*
 
-| View | Description |
-| :--- | :--- |
-| **Manager Executive Overview** | High-level metrics, open SLA warnings, team dispatch capacity, and resolution trend charts. |
-| **Incident Investigation & Confirmation** | Agent resolution drawer and employee two-phase confirmation dialog. |
-| **Service Catalogue & Stepper** | Categorized service offerings with live 4-step progress stepper. |
-| **CAB Change Calendar** | 30-day interactive timeline showing scheduled maintenance windows and blackout periods. |
-| **AI Support Assistant** | Clean conversational troubleshooting powered by Gemini with one-click incident drafting. |
+### 2. Agent Operational Workspace Cockpit
+*Real-time workload capacity trackers, urgent SLA countdown badges, and immediate queue dispatch.*
 
----
+### 3. Employee Incident Submission & Two-Way Confirmation
+*Deterministic priority scoring upon submission, and mandatory resolution verification before tickets close.*
 
-## Future Enhancements
-
-- [ ] **Email & Slack Notifications:** Webhook integrations for outbound alerts when tickets are assigned or require approval.
-- [ ] **Multi-language Support:** AI Assistant localization for global organizations.
-- [ ] **CMDB (Configuration Management Database):** Direct linking of IT Assets and CIs to Change Requests.
-- [ ] **SSO / SAML 2.0:** Enterprise Okta and Azure AD integration for unified corporate login.
+### 4. System Administration & Governance
+*Live User Directory, Support Team dispatch configuration with real headcounts, and dynamic SLA Policy tuning.*
 
 ---
 
-## License
+## 🔮 Future Enhancements
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- [ ] **Omnichannel Notifications**: Outbound webhook alerts via Slack, Microsoft Teams, and SendGrid email.
+- [ ] **Expanded Multilingual AI**: Multi-language real-time translation for global service desks.
+- [ ] **Asset Management (CMDB)**: Integration of hardware asset tracking with automatic configuration item (CI) binding.
+- [ ] **Enterprise Single Sign-On**: SAML 2.0 and Okta / Azure AD identity verification.
+- [ ] **Predictive Outage Analytics**: Machine learning models forecasting infrastructure failures from telemetry logs.
 
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
+
+---
+
+### 👨‍💻 Author & Maintainer
+**Jai Kumar**  
+GitHub: [@Jai7525](https://github.com/Jai7525)  
+Repository: [https://github.com/Jai7525/Smart-it-service-desk](https://github.com/Jai7525/Smart-it-service-desk)
