@@ -122,27 +122,9 @@ SmartTicket enforces strict Role-Based Access Control (RBAC) across both backend
 SmartTicket uses a modular, cloud-native decoupled architecture:
 
 ```
-                      ┌────────────────────────────────────────┐
-                      │          React 19 Frontend             │
-                      │   Tailwind CSS 4 • Lucide • Vite 8     │
-                      │  (Hosted on Vercel Edge Global CDN)    │
-                      └──────────────────┬─────────────────────┘
-                                         │
-                                HTTPS / REST API
-                                         │
-                      ┌──────────────────▼─────────────────────┐
-                      │          FastAPI Backend Engine        │
-                      │   Python 3.13 • Pydantic v2 • Uvicorn  │
-                      │ (Hosted on Render Cloud Web Services)  │
-                      └──────────────┬──────────────────┬──────┘
-                                     │                  │
-                SQLAlchemy / psycopg │                  │ Google Gemini API
-                                     │                  │
-                      ┌──────────────▼─────┐      ┌─────▼──────────────┐
-                      │ Supabase Postgres  │      │ Google Gemini 2.5  │
-                      │ Connection Pooler  │      │ AI Assistant Engine│
-                      │ (Tokyo ap-ne-1)    │      └────────────────────┘
-                      └────────────────────┘
+ <img width="3222" height="2400" alt="sys_st" src="https://github.com/user-attachments/assets/728fd1b0-a1b3-4e34-830c-c5e88276f386" />
+
+                   
 ```
 
 ---
