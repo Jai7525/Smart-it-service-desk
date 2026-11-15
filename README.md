@@ -433,18 +433,21 @@ tests/test_resolution_confirmation.py::test_invalid_lifecycle_transition_guards 
 
 ## 📸 Screenshots & UI Walkthrough
 
-### 1. Modern Sign-In Portal with Quick Demo Personas
-![SmartTicket Login Portal](https://raw.githubusercontent.com/Jai7525/Smart-it-service-desk/main/frontend/src/assets/login-illustration.svg)
-*Featuring responsive 2-column layout, vector helpdesk illustration, and one-click demo login buttons for all 4 roles.*
+### 1. Executive Dashboard (Manager Overview & Metrics)
+![Executive Dashboard](screenshots/dashboard.png)
+*Executive overview displaying real-time incident resolution trends, category breakdowns, and active SLA compliance.*
 
-### 2. Agent Operational Workspace Cockpit
-*Real-time workload capacity trackers, urgent SLA countdown badges, and immediate queue dispatch.*
+### 2. User Directory & Governance (Admin Role)
+![User Directory](screenshots/user-management.png)
+*Centralized user provisioning table displaying roles, departments, active status indicators, and RBAC controls.*
 
-### 3. Employee Incident Submission & Two-Way Confirmation
-*Deterministic priority scoring upon submission, and mandatory resolution verification before tickets close.*
+### 3. Ticket & Incident Management (Agent Workbench)
+![Incident Management](screenshots/incident-management.png)
+*Dedicated agent triage center with filter tabs, countdown SLA timers, status updates, and timeline notes.*
 
-### 4. System Administration & Governance
-*Live User Directory, Support Team dispatch configuration with real headcounts, and dynamic SLA Policy tuning.*
+### 4. AI Assistant & Change Management (CAB Governance)
+![AI Assistant and Change Management](screenshots/ai-change-management.png)
+*ITIL Change Advisory Board (CAB) review center with dynamic risk scoring, approval actions, and 30-day change calendar.*
 
 ---
 
