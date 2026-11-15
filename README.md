@@ -450,6 +450,6 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 ---
 
 ### 👨‍💻 Author & Maintainer
-**Jai Kumar**  
+**Jayakumar M**  
 GitHub: [@Jai7525](https://github.com/Jai7525)  
 Repository: [https://github.com/Jai7525/Smart-it-service-desk](https://github.com/Jai7525/Smart-it-service-desk)
