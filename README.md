@@ -121,11 +121,11 @@ SmartTicket enforces strict Role-Based Access Control (RBAC) across both backend
 
 SmartTicket uses a modular, cloud-native decoupled architecture:
 
-```
+
  <img width="3222" height="2400" alt="sys_st" src="https://github.com/user-attachments/assets/728fd1b0-a1b3-4e34-830c-c5e88276f386" />
 
                    
-```
+
 
 ---
 
