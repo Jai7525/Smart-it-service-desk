@@ -121,6 +121,7 @@ export const AdminDashboard: React.FC = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userRole, setUserRole] = useState<UserRole>('employee');
   const [userDept, setUserDept] = useState('Engineering');
+  const [agentSpecialization, setAgentSpecialization] = useState<string>('Network Operations');
 
   const [showAddTeamModal, setShowAddTeamModal] = useState(false);
   const [teamName, setTeamName] = useState('');
@@ -142,11 +143,22 @@ export const AdminDashboard: React.FC = () => {
     if (!userName.trim() || !userEmail.trim()) return;
 
     try {
+      const isAgent = userRole === 'agent';
+      const specCategoryMap: Record<string, string> = {
+        'Network Operations': 'Network',
+        'Hardware Support': 'Hardware',
+        'Application Support': 'Software',
+        'Identity & Access Team': 'Access',
+        'General Service Desk': 'General',
+      };
+
       await api.admin.createUser({
         full_name: userName,
         email: userEmail,
         role: userRole,
-        department_name: userDept,
+        department_name: isAgent ? 'IT Operations' : userDept,
+        support_team_name: isAgent ? agentSpecialization : undefined,
+        support_team_category: isAgent ? specCategoryMap[agentSpecialization] : undefined,
       });
       await fetchAdminData();
     } catch (err) {
@@ -158,7 +170,7 @@ export const AdminDashboard: React.FC = () => {
           full_name: userName,
           email: userEmail,
           role: userRole,
-          department: userDept,
+          department: userRole === 'agent' ? `IT Operations (${agentSpecialization})` : userDept,
           isActive: true,
         },
       ]);
@@ -789,7 +801,13 @@ export const AdminDashboard: React.FC = () => {
                 <label className="block text-xs font-semibold text-slate-800">Role</label>
                 <select
                   value={userRole}
-                  onChange={(e) => setUserRole(e.target.value as UserRole)}
+                  onChange={(e) => {
+                    const nextRole = e.target.value as UserRole;
+                    setUserRole(nextRole);
+                    if (nextRole === 'agent') {
+                      setUserDept('IT Operations');
+                    }
+                  }}
                   className="w-full bg-slate-50 border border-slate-200 rounded p-2 text-xs"
                 >
                   <option value="employee">Employee</option>
@@ -799,19 +817,36 @@ export const AdminDashboard: React.FC = () => {
                 </select>
               </div>
 
-              <div className="space-y-1">
-                <label className="block text-xs font-semibold text-slate-800">Department</label>
-                <select
-                  value={userDept}
-                  onChange={(e) => setUserDept(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded p-2 text-xs"
-                >
-                  <option value="Engineering">Engineering</option>
-                  <option value="Human Resources">Human Resources</option>
-                  <option value="IT Operations">IT Operations</option>
-                  <option value="Finance">Finance</option>
-                </select>
-              </div>
+              {userRole === 'agent' ? (
+                <div className="space-y-1">
+                  <label className="block text-xs font-semibold text-blue-700">Specialization (Support Team)</label>
+                  <select
+                    value={agentSpecialization}
+                    onChange={(e) => setAgentSpecialization(e.target.value)}
+                    className="w-full bg-blue-50/50 border border-blue-200 rounded p-2 text-xs text-blue-900 font-medium focus:ring-1 focus:ring-blue-500"
+                  >
+                    <option value="Network Operations">Network Operations (Wi-Fi, VPN, LAN)</option>
+                    <option value="Hardware Support">Hardware Support (Laptops, Devices)</option>
+                    <option value="Application Support">Application Support (Software, Apps)</option>
+                    <option value="Identity & Access Team">Identity & Access (IAM, SSO, Logins)</option>
+                    <option value="General Service Desk">General Service Desk (Triage)</option>
+                  </select>
+                </div>
+              ) : (
+                <div className="space-y-1">
+                  <label className="block text-xs font-semibold text-slate-800">Department</label>
+                  <select
+                    value={userDept}
+                    onChange={(e) => setUserDept(e.target.value)}
+                    className="w-full bg-slate-50 border border-slate-200 rounded p-2 text-xs"
+                  >
+                    <option value="Engineering">Engineering</option>
+                    <option value="Human Resources">Human Resources</option>
+                    <option value="IT Operations">IT Operations</option>
+                    <option value="Finance">Finance</option>
+                  </select>
+                </div>
+              )}
             </div>
 
             <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">

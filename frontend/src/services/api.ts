@@ -182,7 +182,7 @@ export const api = {
   // ==========================================
   admin: {
     listUsers: () => apiFetch<any[]>('/admin/users'),
-    createUser: (data: { full_name: string; email: string; role: string; department_name?: string }) =>
+    createUser: (data: { full_name: string; email: string; role: string; department_name?: string; support_team_name?: string; support_team_category?: string }) =>
       apiFetch<any>('/admin/users', {
         method: 'POST',
         body: JSON.stringify(data),

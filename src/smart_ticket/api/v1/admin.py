@@ -5,7 +5,7 @@ import uuid
 from pydantic import BaseModel
 from smart_ticket.core.database import get_session
 from smart_ticket.core.security import require_roles, get_current_user
-from smart_ticket.models import Profile, SupportTeam, SLAPolicy, UserRole, IncidentCategory, PriorityLevel, Department
+from smart_ticket.models import Profile, SupportTeam, SLAPolicy, UserRole, IncidentCategory, PriorityLevel, Department, TeamMember
 from smart_ticket.schemas import ProfileRead
 
 router = APIRouter(prefix="/admin", tags=["System Administration"])
@@ -16,6 +16,8 @@ class UserCreateSchema(BaseModel):
     email: str
     role: UserRole
     department_name: Optional[str] = "Engineering"
+    support_team_name: Optional[str] = None
+    support_team_category: Optional[IncidentCategory] = None
 
 
 class TeamCreateSchema(BaseModel):
@@ -74,6 +76,35 @@ def create_user_account(user_in: UserCreateSchema, session: Session = Depends(ge
     session.add(new_user)
     session.commit()
     session.refresh(new_user)
+
+    # If role is agent, auto-associate with matching SupportTeam
+    if user_in.role == UserRole.AGENT:
+        team = None
+        if user_in.support_team_category:
+            team = session.exec(
+                select(SupportTeam).where(SupportTeam.category == user_in.support_team_category)
+            ).first()
+        elif user_in.support_team_name:
+            team = session.exec(
+                select(SupportTeam).where(SupportTeam.name.ilike(user_in.support_team_name.strip()))
+            ).first()
+
+        # Fallback to general support team or first team if none specified
+        if not team:
+            team = session.exec(
+                select(SupportTeam).where(SupportTeam.category == IncidentCategory.GENERAL)
+            ).first()
+        if not team:
+            team = session.exec(select(SupportTeam)).first()
+
+        if team:
+            team_member = TeamMember(
+                team_id=team.id,
+                agent_id=new_user.id
+            )
+            session.add(team_member)
+            session.commit()
+
     p = ProfileRead.model_validate(new_user)
     if dept_id and user_in.department_name:
         p.department_name = user_in.department_name.strip()
