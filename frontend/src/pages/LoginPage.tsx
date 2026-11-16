@@ -22,10 +22,10 @@ export const LoginPage: React.FC = () => {
 
   // Quick demonstration accounts mapped to actual backend credentials & matching design tags
   const demoAccounts = [
-    { label: 'Admin', tag: 'sys', dotColor: 'bg-amber-400', email: 'admin@smartticket.local' },
-    { label: 'Manager', tag: 'lead', dotColor: 'bg-cyan-300', email: 'manager@smartticket.local' },
-    { label: 'Agent', tag: 'tier-2', dotColor: 'bg-emerald-400', email: 'agent.network@smartticket.local' },
-    { label: 'Employee', tag: 'staff', dotColor: 'bg-purple-300', email: 'employee.john@smartticket.local' },
+    { label: 'Admin', dotColor: 'bg-amber-400', email: 'admin@smartticket.local' },
+    { label: 'Manager', dotColor: 'bg-cyan-300', email: 'manager@smartticket.local' },
+    { label: 'Agent', dotColor: 'bg-emerald-400', email: 'agent.network@smartticket.local' },
+    { label: 'Employee', dotColor: 'bg-purple-300', email: 'employee.john@smartticket.local' },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -300,9 +300,6 @@ export const LoginPage: React.FC = () => {
                     <span className={`w-2 h-2 rounded-full ${acc.dotColor}`} />
                     <span>{acc.label}</span>
                   </div>
-                  <span className="text-[9px] xl:text-[10px] text-blue-200 opacity-60 group-hover:opacity-100 font-mono">
-                    {acc.tag}
-                  </span>
                 </button>
               ))}
             </div>
