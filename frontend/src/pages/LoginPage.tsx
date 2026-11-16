@@ -78,7 +78,7 @@ export const LoginPage: React.FC = () => {
           {/* Brand & Headline */}
           <div className="space-y-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#3072E8] flex items-center justify-center font-bold text-white text-xs shadow-sm">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-700 via-blue-600 to-sky-500 flex items-center justify-center font-extrabold text-white text-xs shadow-md shadow-blue-500/20 border border-blue-400/30">
                 ST
               </div>
               <span className="font-bold text-lg tracking-tight text-slate-900">SmartTicket</span>
