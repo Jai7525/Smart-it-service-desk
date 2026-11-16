@@ -82,11 +82,11 @@ export const LoginPage: React.FC = () => {
         <div className="relative z-10 space-y-6">
           {/* SmartTicket Custom S-Logo matching design screenshot */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#1E56F0] flex items-center justify-center shadow-md shadow-[#1E56F0]/20 p-2">
+            <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center p-1.5">
               <img
                 src={brandLogo}
                 alt="SmartTicket Emblem"
-                className="w-full h-full object-contain filter brightness-0 invert"
+                className="w-full h-full object-contain"
               />
             </div>
             <div className="flex items-baseline">

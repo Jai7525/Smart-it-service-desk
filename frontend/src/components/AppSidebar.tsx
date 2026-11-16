@@ -83,8 +83,8 @@ export const AppSidebar: React.FC = () => {
     <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 select-none">
       {/* Brand Header */}
       <div className="h-14 px-5 flex items-center gap-3 border-b border-slate-800">
-        <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center p-1 shadow-md shadow-blue-600/30 border border-blue-400/40">
-          <img src="/logo.png" alt="SmartTicket Emblem" className="w-full h-full object-contain filter brightness-0 invert" />
+        <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center p-1 shadow-md shadow-white/10 border border-slate-200">
+          <img src="/logo.png" alt="SmartTicket Emblem" className="w-full h-full object-contain" />
         </div>
         <div className="flex flex-col">
           <div className="flex items-center gap-1.5">
