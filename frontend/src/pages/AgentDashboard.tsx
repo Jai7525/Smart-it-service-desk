@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { StatCard } from '../components/StatCard';
 import { StatusBadge } from '../components/StatusBadge';
 import { PriorityBadge } from '../components/PriorityBadge';
+import { SLABadge } from '../components/SLABadge';
 import { Incident } from '../types';
 import { api } from '../services/api';
 import {
@@ -442,34 +443,24 @@ export const AgentDashboard: React.FC = () => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="bg-white p-2 rounded border border-slate-200/80">
-                    <span className="text-[10px] text-slate-400 block uppercase">1st Response</span>
-                    <span
-                      className={`font-mono text-xs font-bold ${
-                        respSla.isBreached
-                          ? 'text-rose-600'
-                          : respSla.isUrgent
-                          ? 'text-amber-600'
-                          : 'text-slate-800'
-                      }`}
-                    >
-                      {selectedTicket.status !== 'open' ? 'Responded (Met)' : respSla.text}
-                    </span>
+                  <div className="bg-white p-2 rounded border border-slate-200/80 space-y-1">
+                    <span className="text-[10px] text-slate-400 block uppercase font-medium">1st Response SLA</span>
+                    <SLABadge
+                      deadline={selectedTicket.response_deadline}
+                      respondedAt={selectedTicket.status !== 'open' ? (selectedTicket.created_at || 'responded') : null}
+                      isBreached={selectedTicket.sla_response_breached}
+                      type="response"
+                    />
                   </div>
 
-                  <div className="bg-white p-2 rounded border border-slate-200/80">
-                    <span className="text-[10px] text-slate-400 block uppercase">Resolution</span>
-                    <span
-                      className={`font-mono text-xs font-bold ${
-                        selectedTicket.status === 'resolved' || selectedTicket.status === 'closed'
-                          ? 'text-emerald-600'
-                          : resSla.isBreached
-                          ? 'text-rose-600'
-                          : 'text-slate-800'
-                      }`}
-                    >
-                      {selectedTicket.status === 'resolved' ? 'Resolved' : resSla.text}
-                    </span>
+                  <div className="bg-white p-2 rounded border border-slate-200/80 space-y-1">
+                    <span className="text-[10px] text-slate-400 block uppercase font-medium">Resolution SLA</span>
+                    <SLABadge
+                      deadline={selectedTicket.resolution_deadline}
+                      resolvedAt={selectedTicket.resolved_at}
+                      isBreached={selectedTicket.sla_resolution_breached}
+                      type="resolution"
+                    />
                   </div>
                 </div>
               </div>

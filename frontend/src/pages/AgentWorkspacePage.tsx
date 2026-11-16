@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { StatCard } from '../components/StatCard';
 import { StatusBadge } from '../components/StatusBadge';
 import { PriorityBadge } from '../components/PriorityBadge';
+import { SLABadge } from '../components/SLABadge';
 import { Incident } from '../types';
 import { api } from '../services/api';
 import {
@@ -209,19 +210,14 @@ export const AgentWorkspacePage: React.FC = () => {
                       </p>
                     </div>
 
-                    <div className="text-right shrink-0">
-                      <div
-                        className={`text-xs font-mono font-bold px-2 py-0.5 rounded inline-block ${
-                          sla.isBreached
-                            ? 'bg-rose-100 text-rose-700 border border-rose-200'
-                            : sla.isUrgent
-                            ? 'bg-amber-100 text-amber-800 border border-amber-200 animate-pulse'
-                            : 'bg-slate-100 text-slate-700'
-                        }`}
-                      >
-                        {sla.text}
-                      </div>
-                      <div className="text-[10px] text-slate-400 mt-1">Resolution SLA</div>
+                    <div className="text-right shrink-0 space-y-1">
+                      <SLABadge
+                        deadline={t.resolution_deadline}
+                        resolvedAt={t.resolved_at}
+                        isBreached={t.sla_resolution_breached}
+                        type="resolution"
+                      />
+                      <div className="text-[10px] text-slate-400">Resolution SLA</div>
                     </div>
                   </div>
                 );

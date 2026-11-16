@@ -63,9 +63,9 @@ def create_incident(
     # 4. Agent Assignment (Least-Loaded in Category Team)
     team_id, agent_id = AssignmentEngine.assign_ticket(session, category)
 
-    # 5. SLA Deadlines
+    # 5. SLA Deadlines (Computed from live database SLA Policy matrix)
     now = datetime.now(timezone.utc)
-    response_deadline, resolution_deadline = SLAEngine.calculate_deadlines(priority, now)
+    response_deadline, resolution_deadline = SLAEngine.calculate_deadlines(priority, now, session=session)
 
     # 6. Instantiate & Save Incident
     incident = Incident(
