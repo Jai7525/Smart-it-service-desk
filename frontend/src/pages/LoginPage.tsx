@@ -7,7 +7,6 @@ import {
   AlertCircle,
   Loader2,
   ShieldCheck,
-  CheckCircle2,
   Zap,
 } from 'lucide-react';
 import loginEcosystem from '../assets/login-3d-ecosystem.png';
@@ -21,12 +20,12 @@ export const LoginPage: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  // Quick demonstration accounts mapped to actual backend credentials
+  // Quick demonstration accounts mapped to actual backend credentials & matching design tags
   const demoAccounts = [
-    { label: 'Admin', tag: 'sys', color: 'bg-amber-400', email: 'admin@smartticket.local' },
-    { label: 'Manager', tag: 'lead', color: 'bg-cyan-300', email: 'manager@smartticket.local' },
-    { label: 'Agent', tag: 'tier-2', color: 'bg-emerald-400', email: 'agent.network@smartticket.local' },
-    { label: 'Employee', tag: 'staff', color: 'bg-purple-300', email: 'employee.john@smartticket.local' },
+    { label: 'Admin', tag: 'sys', dotColor: 'bg-amber-400', email: 'admin@smartticket.local' },
+    { label: 'Manager', tag: 'lead', dotColor: 'bg-cyan-300', email: 'manager@smartticket.local' },
+    { label: 'Agent', tag: 'tier-2', dotColor: 'bg-emerald-400', email: 'agent.network@smartticket.local' },
+    { label: 'Employee', tag: 'staff', dotColor: 'bg-purple-300', email: 'employee.john@smartticket.local' },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,9 +67,9 @@ export const LoginPage: React.FC = () => {
   };
 
   return (
-    <main className="w-full min-h-screen flex flex-col lg:flex-row flex-1 bg-slate-50 antialiased font-sans select-none">
+    <main className="w-full min-h-screen flex flex-col lg:flex-row flex-1 bg-slate-50 antialiased font-sans select-none selection:bg-[#1E56F0] selection:text-white">
       {/* ========================================================================= */}
-      {/* LEFT SECTION: Branding, Dynamic Headers & 3D Isometric IT Operations      */}
+      {/* LEFT SECTION: Branding & 3D Illustration (54% Width)                      */}
       {/* ========================================================================= */}
       <section
         aria-label="Welcome and illustration"
@@ -79,22 +78,22 @@ export const LoginPage: React.FC = () => {
         {/* Subtle Ambient Background Pattern */}
         <div className="absolute inset-0 bg-[radial-gradient(#1E56F0_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.035] pointer-events-none" />
 
-        {/* Top Content: Custom Logo & Header */}
+        {/* Top Content: SmartTicket Logo & Header */}
         <div className="relative z-10 space-y-6">
-          {/* SmartTicket Custom S-Logo */}
+          {/* SmartTicket Custom S-Logo matching design screenshot */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center shadow-md shadow-blue-600/20 p-1.5">
+            <div className="w-10 h-10 rounded-xl bg-[#1E56F0] flex items-center justify-center shadow-md shadow-[#1E56F0]/20 p-2">
               <img
                 src={brandLogo}
-                alt="SmartTicket Logo"
+                alt="SmartTicket Emblem"
                 className="w-full h-full object-contain filter brightness-0 invert"
               />
             </div>
             <div className="flex items-baseline">
               <span className="text-2xl font-bold tracking-tight text-slate-900">
-                Smart<span className="text-blue-600 font-extrabold">Ticket</span>
+                Smart<span className="text-[#1E56F0] font-extrabold">Ticket</span>
               </span>
-              <span className="ml-2.5 px-2.5 py-0.5 text-[10px] font-semibold tracking-wider uppercase bg-blue-50 text-blue-700 rounded-full border border-blue-200/60">
+              <span className="ml-2.5 px-2.5 py-0.5 text-[10px] font-semibold tracking-wider uppercase bg-blue-50 text-[#1540CC] rounded-full border border-blue-200/60">
                 Enterprise
               </span>
             </div>
@@ -111,11 +110,11 @@ export const LoginPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Center 3D Isometric IT Operations Illustration with Micro Floating Badges */}
+        {/* Center 3D Isometric IT Operations Illustration */}
         <div className="relative z-10 my-6 sm:my-8 flex items-center justify-center flex-1">
           <div className="relative w-full max-w-[500px] lg:max-w-[540px] xl:max-w-[560px] group">
             {/* Ambient Glow under illustration */}
-            <div className="absolute inset-4 -bottom-6 bg-blue-500/15 rounded-full blur-2xl transform-gpu -z-10" />
+            <div className="absolute inset-4 -bottom-6 bg-[#4B68F6]/15 rounded-full blur-2xl transform-gpu -z-10" />
 
             {/* Pristine 3D Scene Frame */}
             <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-slate-200/80 border border-slate-100/90 bg-white">
@@ -127,7 +126,7 @@ export const LoginPage: React.FC = () => {
               />
             </div>
 
-            {/* Micro Floating Badge Bottom-Left */}
+            {/* Micro Floating Badges */}
             <div className="hidden sm:flex absolute -bottom-3 -left-4 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-xl shadow-lg border border-slate-100 items-center gap-2.5">
               <span className="flex h-2.5 w-2.5 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
@@ -139,9 +138,8 @@ export const LoginPage: React.FC = () => {
               </span>
             </div>
 
-            {/* Micro Floating Badge Top-Right */}
             <div className="hidden sm:flex absolute -top-3 -right-4 bg-white/95 backdrop-blur-md px-3.5 py-2 rounded-xl shadow-lg border border-slate-100 items-center gap-2.5">
-              <div className="w-6 h-6 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+              <div className="w-6 h-6 rounded-lg bg-blue-50 text-[#1E56F0] flex items-center justify-center">
                 <Zap className="w-3.5 h-3.5" />
               </div>
               <div className="text-left">
@@ -156,28 +154,28 @@ export const LoginPage: React.FC = () => {
         <div className="relative z-10 pt-4 border-t border-slate-100 flex items-center justify-between">
           <p className="text-xs sm:text-sm font-medium text-slate-500 tracking-wide flex items-center gap-1 sm:gap-2">
             <span>Fast resolution</span>
-            <span className="text-blue-500">•</span>
+            <span className="text-[#1E56F0]">•</span>
             <span>Automated routing</span>
-            <span className="text-blue-500">•</span>
+            <span className="text-[#1E56F0]">•</span>
             <span>24/7 SLA tracking</span>
           </p>
           <span className="hidden md:inline-flex items-center gap-1.5 text-xs text-slate-400 font-normal">
-            <ShieldCheck className="w-3.5 h-3.5 text-blue-500" />
+            <ShieldCheck className="w-3.5 h-3.5 text-[#1E56F0]" />
             SOC2 Type II Certified
           </span>
         </div>
       </section>
 
       {/* ========================================================================= */}
-      {/* RIGHT SECTION: Signature Blue Sign-In Experience                          */}
+      {/* RIGHT SECTION: Vibrant Signature Blue Sign-In Experience (46% Width)      */}
       {/* ========================================================================= */}
       <section
         aria-label="Sign in"
-        className="w-full lg:w-[46%] bg-blue-600 text-white flex flex-col justify-between p-8 sm:p-12 lg:p-14 xl:p-16 relative overflow-hidden"
+        className="w-full lg:w-[46%] bg-[#1E56F0] text-white flex flex-col justify-between p-8 sm:p-12 lg:p-14 xl:p-16 relative overflow-hidden"
       >
-        {/* Background Geometric Curves & Light Gradients */}
-        <div className="absolute -top-32 -right-32 w-96 h-96 bg-blue-500/50 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-blue-800/60 rounded-full blur-3xl pointer-events-none" />
+        {/* Background Geometric Curves & Glow */}
+        <div className="absolute -top-32 -right-32 w-96 h-96 bg-[#4B68F6]/40 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-[#1032A3]/60 rounded-full blur-3xl pointer-events-none" />
 
         {/* Top Subtle Security Badge */}
         <div className="relative z-10 flex justify-end items-center">
@@ -237,7 +235,7 @@ export const LoginPage: React.FC = () => {
                 <input
                   type="checkbox"
                   defaultChecked
-                  className="w-4 h-4 rounded text-blue-600 bg-white border-none focus:ring-offset-blue-600 focus:ring-2 focus:ring-white transition duration-150 cursor-pointer"
+                  className="w-4 h-4 rounded text-[#1E56F0] bg-white border-none focus:ring-offset-[#1E56F0] focus:ring-2 focus:ring-white transition duration-150 cursor-pointer"
                 />
                 <span className="text-sm font-medium text-blue-100 group-hover:text-white transition-colors">
                   Remember me
@@ -257,17 +255,17 @@ export const LoginPage: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full mt-2 py-3.5 px-6 rounded-xl font-bold text-blue-700 bg-white hover:bg-blue-50 active:bg-blue-100 shadow-lg shadow-blue-900/25 flex items-center justify-center gap-2 group transition-all duration-200 transform hover:-translate-y-0.5 cursor-pointer"
+              className="w-full mt-2 py-3.5 px-6 rounded-xl font-bold text-[#1540CC] bg-white hover:bg-blue-50 active:bg-blue-100 shadow-lg shadow-[#1032A3]/25 flex items-center justify-center gap-2 group transition-all duration-200 transform hover:-translate-y-0.5 cursor-pointer"
             >
               {isLoading ? (
                 <>
-                  <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
+                  <Loader2 className="w-4 h-4 animate-spin text-[#1E56F0]" />
                   <span>Logging in...</span>
                 </>
               ) : (
                 <>
                   <span>Login Now</span>
-                  <ArrowRight className="w-4 h-4 text-blue-600 transform transition-transform duration-200 group-hover:translate-x-1" />
+                  <ArrowRight className="w-4 h-4 text-[#1E56F0] transform transition-transform duration-200 group-hover:translate-x-1" />
                 </>
               )}
             </button>
@@ -296,7 +294,7 @@ export const LoginPage: React.FC = () => {
                   }`}
                 >
                   <div className="flex items-center gap-2">
-                    <span className={`w-2 h-2 rounded-full ${acc.color}`} />
+                    <span className={`w-2 h-2 rounded-full ${acc.dotColor}`} />
                     <span>{acc.label}</span>
                   </div>
                   <span className="text-[10px] text-blue-200 opacity-60 group-hover:opacity-100 font-mono">
