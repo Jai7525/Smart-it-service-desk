@@ -181,7 +181,10 @@ def list_change_requests(
 ):
     query = select(ChangeRequest)
     if status:
-        query = query.where(ChangeRequest.status == status)
+        if status in ["scheduled", "approved"]:
+            query = query.where(ChangeRequest.status.in_(["scheduled", "approved"]))
+        else:
+            query = query.where(ChangeRequest.status == status)
     if change_type:
         query = query.where(ChangeRequest.change_type == change_type)
 
@@ -276,7 +279,7 @@ def approve_change_request(
         raise HTTPException(status_code=404, detail="Change request not found")
 
     now = get_utc_now()
-    chg.status = "approved"
+    chg.status = "scheduled"
     chg.updated_at = now
 
     approval = session.exec(
