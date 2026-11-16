@@ -2,7 +2,9 @@ import { Incident, Problem, NotificationItem, KnowledgeArticle } from '../types'
 
 const API_BASE = import.meta.env.VITE_API_URL 
   ? `${import.meta.env.VITE_API_URL.replace(/\/+$/, '')}/api`
-  : '/api';
+  : (typeof window !== 'undefined' && window.location.hostname.includes('vercel.app'))
+    ? 'https://smart-it-service-desk-1qwo.onrender.com/api'
+    : '/api';
 
 /**
  * Enterprise API client wrapper with standardized error handling and Supabase JWT injection.
