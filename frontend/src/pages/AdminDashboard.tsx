@@ -62,10 +62,10 @@ export const AdminDashboard: React.FC = () => {
   const [users, setUsers] = useState<ManagedUser[]>([]);
   const [teams, setTeams] = useState<ManagedTeam[]>([]);
   const [slaPolicies, setSlaPolicies] = useState<SlaThreshold[]>([
-    { priority: 'Critical', responseHours: 0.5, resolutionHours: 2.0, warningPct: 75 },
-    { priority: 'High', responseHours: 1.0, resolutionHours: 4.0, warningPct: 75 },
-    { priority: 'Medium', responseHours: 4.0, resolutionHours: 24.0, warningPct: 75 },
-    { priority: 'Low', responseHours: 8.0, resolutionHours: 48.0, warningPct: 75 },
+    { priority: 'Critical', responseHours: 0.25, resolutionHours: 2.0, warningPct: 75 },
+    { priority: 'High', responseHours: 0.5, resolutionHours: 4.0, warningPct: 75 },
+    { priority: 'Medium', responseHours: 2.0, resolutionHours: 24.0, warningPct: 75 },
+    { priority: 'Low', responseHours: 4.0, resolutionHours: 48.0, warningPct: 75 },
   ]);
 
   const fetchAdminData = async () => {
@@ -207,22 +207,35 @@ export const AdminDashboard: React.FC = () => {
     setTeamName('');
   };
 
-  const handleUpdateSla = async (priority: string, field: 'responseHours' | 'resolutionHours', value: number) => {
+  const [savingSla, setSavingSla] = useState(false);
+  const [saveSuccessMsg, setSaveSuccessMsg] = useState('');
+
+  const handleSaveAllSla = async () => {
+    setSavingSla(true);
+    setSaveSuccessMsg('');
+    try {
+      await Promise.all(
+        slaPolicies.map((p) =>
+          api.admin.updateSlaPolicy({
+            priority: p.priority.toLowerCase(),
+            response_time_hours: p.responseHours,
+            resolution_time_hours: p.resolutionHours,
+          })
+        )
+      );
+      setSaveSuccessMsg('All SLA targets successfully updated in live database!');
+      setTimeout(() => setSaveSuccessMsg(''), 4000);
+    } catch (err: any) {
+      console.warn('Failed to bulk save SLA policies:', err);
+      alert('Failed to save SLA policies to server.');
+    } finally {
+      setSavingSla(false);
+    }
+  };
+
+  const handleUpdateSla = (priority: string, field: 'responseHours' | 'resolutionHours', value: number) => {
     const updated = slaPolicies.map((p) => (p.priority === priority ? { ...p, [field]: value } : p));
     setSlaPolicies(updated);
-
-    const targetPolicy = updated.find((p) => p.priority === priority);
-    if (targetPolicy) {
-      try {
-        await api.admin.updateSlaPolicy({
-          priority: priority.toLowerCase(),
-          response_time_hours: targetPolicy.responseHours,
-          resolution_time_hours: targetPolicy.resolutionHours,
-        });
-      } catch (e) {
-        console.warn('Backend update SLA error:', e);
-      }
-    }
   };
 
   return (
@@ -658,12 +671,18 @@ export const AdminDashboard: React.FC = () => {
             </tbody>
           </table>
 
-          <div className="flex justify-end pt-2">
+          <div className="flex justify-end gap-3 pt-2 items-center">
+            {saveSuccessMsg && (
+              <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded">
+                ✓ {saveSuccessMsg}
+              </span>
+            )}
             <button
-              onClick={() => alert('SLA Policy thresholds saved successfully.')}
+              onClick={handleSaveAllSla}
+              disabled={savingSla}
               className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded text-xs font-semibold shadow-xs transition-colors"
             >
-              Save SLA Changes
+              {savingSla ? 'Saving to Database...' : 'Save SLA Changes'}
             </button>
           </div>
         </div>
