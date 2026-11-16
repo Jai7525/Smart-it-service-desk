@@ -83,12 +83,15 @@ export const AppSidebar: React.FC = () => {
     <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col shrink-0 select-none">
       {/* Brand Header */}
       <div className="h-14 px-5 flex items-center gap-3 border-b border-slate-800">
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-blue-700 via-blue-600 to-sky-500 flex items-center justify-center font-extrabold text-white text-xs shadow-md shadow-blue-500/20 border border-blue-400/30">
-          ST
+        <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center p-1 shadow-md shadow-blue-600/30 border border-blue-400/40">
+          <img src="/logo.png" alt="SmartTicket Emblem" className="w-full h-full object-contain filter brightness-0 invert" />
         </div>
         <div className="flex flex-col">
-          <span className="font-bold text-sm text-slate-100 tracking-tight">SmartTicket</span>
-          <span className="text-[10px] text-blue-400/90 font-mono uppercase tracking-wider font-semibold">USM Platform</span>
+          <div className="flex items-center gap-1.5">
+            <span className="font-bold text-sm text-slate-100 tracking-tight">SmartTicket</span>
+            <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 bg-blue-500/20 text-blue-400 border border-blue-400/30 rounded">ENT</span>
+          </div>
+          <span className="text-[10px] text-slate-400 font-mono uppercase tracking-wider">USM Platform</span>
         </div>
       </div>
 
